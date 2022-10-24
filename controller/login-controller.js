@@ -48,5 +48,11 @@ module.exports = {
             }
         })
     },
+    logout(requ, resp) {
+        requ.session.destroy(function(err) {
+            // res.redirect('/login');
+            resp.send('selamat anda berhasil logout, silahkan login <a href="/login">Login</a>')
+        })
+    }
 
 }

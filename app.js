@@ -8,6 +8,7 @@ const indexRoute = require('./routes/index-router')
 const loginUserRoute = require('./routes/login_user-router')
 const registerRoute = require('./routes/register-router')
 const loginAdminRoute = require('./routes/login_admin-router')
+const logoutRoute = require('./routes/logout-routes')
 
 
 
@@ -39,6 +40,7 @@ app.use(indexRoute)
 app.use(loginUserRoute)
 app.use(registerRoute)
 app.use(loginAdminRoute)
+app.use(logoutRoute)
 
 
 
