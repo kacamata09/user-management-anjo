@@ -9,6 +9,7 @@ const loginUserRoute = require('./routes/login_user-router')
 const registerRoute = require('./routes/register-router')
 const loginAdminRoute = require('./routes/login_admin-router')
 const logoutRoute = require('./routes/logout-routes')
+const tampiUerRoute = require('./routes/tampil_user-router')
 
 
 
@@ -41,6 +42,7 @@ app.use(loginUserRoute)
 app.use(registerRoute)
 app.use(loginAdminRoute)
 app.use(logoutRoute)
+app.use(tampiUerRoute)
 
 
 
