@@ -12,7 +12,7 @@ module.exports = {
         koneksi.query(cariData, requ.body.email, (err, rows, field) => {
             if (err) throw err
             if (rows.length == 0) {
-                koneksi.query(simpanData, [getData.nama, getData.email, getData.role, getData.password], (err, rows, field) => {
+                koneksi.query(simpanData, [getData.nama, getData.email, 'user', getData.password], (err, rows, field) => {
                     if(err) throw err
                     resp.redirect('/user/register')
                     return
