@@ -5,3 +5,10 @@ const koneksi = mysql.createConnection({
     password:'',
     database:'dbCoba'
 })
+
+koneksi.connect((err)=>{
+    if (err) throw err
+    console.log('mysql sedang berjalan...')
+})
+
+module.exports = koneksi
