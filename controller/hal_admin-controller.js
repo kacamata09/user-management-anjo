@@ -1,5 +1,5 @@
 module.exports = {
     tampil(requ, resp) {
-        resp.render('dashboard_user.ejs')
+        resp.render('dashboard_admin.ejs')
     }
 }
