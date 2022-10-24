@@ -7,7 +7,7 @@
     <title>Halaman User</title>
 </head>
 <body>
-
+<h3>Halaman User</h3>
     <ul>
         <li><a href="/user/register">Register User</a></li>
     </ul>
@@ -22,8 +22,8 @@
             <tr>
                 <td><%= u.nama %></td>
                 <td><%= u.email %></td>
-                <td><a href="/user/hapus/<%= u.id %>">Edit</a></td>
-                <td><a href="/user/simpan/<%= u.id %>">Edit</a></td>
+                <td><a href="/user/hapus/<%= u.id %>">Hapus</a></td>
+                <td><a href="/user/edit/<%= u.id %>">Edit</a></td>
             </tr>
         <% }) %>
     </table>

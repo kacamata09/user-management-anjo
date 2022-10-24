@@ -29,5 +29,13 @@ module.exports = {
 
             resp.redirect('/user')
         })
+    },
+    tampilEdit(requ, resp) {
+        const ambilData = 'select * from pengguna where id = ?'
+        const ambilId = requ.params.id
+
+        koneksi.query(ambilData, ambilId, (err, rows, field) => {
+            resp.render('user_edit.ejs', user=rows[0])
+        })
     }
 }

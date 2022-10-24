@@ -10,6 +10,7 @@ module.exports = {
         const getData = requ.body
         const cariData = 'select * from pengguna where email = ?'
         koneksi.query(cariData, requ.body.email, (err, rows, field) => {
+            if (err) throw err
             if (rows.length == 0) {
                 koneksi.query(simpanData, [getData.nama, getData.email, getData.role, getData.password], (err, rows, field) => {
                     if(err) throw err
@@ -23,5 +24,7 @@ module.exports = {
                 return
             }
         })
+
+        
     }
 }
