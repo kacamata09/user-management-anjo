@@ -1,5 +1,7 @@
 module.exports = {
     tampil(requ, resp) {
-        resp.render('dashboard_user.ejs')
+        requ.session.loggedid = true
+        id = requ.session.userid
+        resp.render('dashboard_user.ejs', idUser = {id})
     }
 }

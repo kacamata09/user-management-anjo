@@ -11,24 +11,25 @@ module.exports = {
         const ambilPassword = requ.body
         const editPassword = 'update pengguna set password = SHA2(?, 512) where id = ?'
 
-        koneksi.query(ambilUser, ambilId, (err, rows, field) => {
-            if (err) throw err
+        // koneksi.query(ambilUser, ambilId, (err, rows, field) => {
+        //     if (err) throw err
             koneksi.query(cekPassword, [ambilId, ambilPassword.password_lama], (err, rows, field) => {
                 if (err) throw err
 
                 if (rows.length > 0) {
-                    koneksi.query(editPassword, [requ.body.password+baru, ambilId], (err, rows, field) => {
+                    koneksi.query(editPassword, [ambilPassword.password_baru, ambilId], (err, rows, field) => {
                         if (err) throw err
                         resp.send('selamat password anda berhasil diperbarui')
                         return
                     })
+                } else {
+                    resp.send('password lama anda salah')
+                    return
                 }
 
-                resp.send('password lama anda salah')
-                return
                 
             })
             
-        })
+        // })
     }
 }
