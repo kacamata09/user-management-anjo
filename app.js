@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
+const path = require('path')
 
 // routes
 const adminRoute = require('./routes/hal_admin-router')
@@ -9,7 +10,8 @@ const loginUserRoute = require('./routes/login_user-router')
 const registerRoute = require('./routes/register-router')
 const loginAdminRoute = require('./routes/login_admin-router')
 const logoutRoute = require('./routes/logout-routes')
-const tampiUerRoute = require('./routes/tampil_user-router')
+const tampiUserRoute = require('./routes/tampil_user-router')
+const ubahPasswordRoute = require('./routes/ubah_password-router')
 
 
 
@@ -30,6 +32,7 @@ app.use(session({
 
 // iniasiasi si ejs
 app.set('view engine', 'ejs')
+app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist')))
 
 // bodyParser
 app.use(bodyParser.json())
@@ -42,7 +45,8 @@ app.use(loginUserRoute)
 app.use(registerRoute)
 app.use(loginAdminRoute)
 app.use(logoutRoute)
-app.use(tampiUerRoute)
+app.use(tampiUserRoute)
+app.use(ubahPasswordRoute)
 
 
 

@@ -7,7 +7,7 @@ module.exports = {
     ubah(requ, resp) {
         const ambilUser = 'select * from pengguna where id = ?'
         const cekPassword = 'select * from pengguna where id = ? and password = SHA2(?, 512)'
-        const ambilId = requ.params.id
+        const ambilId = requ.session.userid
         const ambilPassword = requ.body
         const editPassword = 'update pengguna set password = SHA2(?, 512) where id = ?'
 

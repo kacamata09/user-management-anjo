@@ -1,4 +1,4 @@
-// "use strict";
+// // "use strict";
 const nodemailer = require("nodemailer");
 
 
@@ -17,9 +17,11 @@ transporter.sendMail({
     to: "muh.ansharibrahim@gmail.com",
     subject: "Hello ✔", 
     text: "Hello world?", 
-  
+
   },
   (err, info) => {
     if(err) throw err
     console.log(info.response)
   });
+
+''
