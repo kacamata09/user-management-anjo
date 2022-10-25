@@ -45,11 +45,26 @@ Kode reset = ${kodeReset}`
             return
         }) 
 
-
     },
     ubahPassword(requ, resp) {
         const ubahPassword = 'update pengguna set password = SHA2(?, 512) where email = ?'
-        koneksi.query()
+        const cekEmail = 'select * from cek_email'
+        const password_baru = requ.body.password_baru
+        const konfirmasi_password = requ.body.konfirpassword
+        const hapusEmail = 'delete from cek_email'
+
+        koneksi.query(cekEmail, (err, rows, field) => {
+            if (err) throw err
+            if (rows.length > 0) {
+                const email = rows[0].email
+                if (password_baru === konfirmasi_password) {
+                    koneksi.query(ubahPassword, [password_baru, email], (err, rows, field) => {
+                        if (err) throw err
+                        koneksi.query(hapusEmail)
+                    })
+                }
+            }
+        })
         resp.send('ini')
     },
     tampilCekkode(requ, resp) {

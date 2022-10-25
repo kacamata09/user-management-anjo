@@ -1,0 +1,9 @@
+ini akun admin:
+
+email = admin@admin.com
+password = 123
+
+ini akun user:
+
+email = user@user.com
+password = 1234
