@@ -12,6 +12,7 @@ const loginAdminRoute = require('./routes/login_admin-router')
 const logoutRoute = require('./routes/logout-routes')
 const tampiUserRoute = require('./routes/tampil_user-router')
 const ubahPasswordRoute = require('./routes/ubah_password-router')
+const lupaPasswordRoute = require('./routes/lupa_password-routes')
 
 
 
@@ -47,6 +48,8 @@ app.use(loginAdminRoute)
 app.use(logoutRoute)
 app.use(tampiUserRoute)
 app.use(ubahPasswordRoute)
+app.use(lupaPasswordRoute)
+
 
 
 

@@ -1,40 +1,7 @@
 const koneksi = require('../config/database')
 const jwt = require('jsonwebtoken')
-
-module.exports = {
-    tampil(requ, resp) {
-        resp.render('lupa_password.ejs')
-    },
-    cekEmail(requ, resp) {
-        const email = requ.body.email
-        const ambilId = requ.params.id
-        const verifEmail = 'select * from pengguna where email = ?'
-        const kodeReset = jwt.sign({email}, 'hacker jangan menyerang', {expiresIn:'5m'}, {algorithm:'HS256'})
-        koneksi.query(verifEmail, email, (err, rows, field) => {
-            if (err) throw err
-            if (rows.length > 0) {
-                resp.redirect('/lupapassword')
-                return
-            }
-        }) 
-        
-        
-        
-        
-        koneksi.query()
-    },
-    ubahPassword(requ, resp) {
-        const ubahPassword = 'update pengguna set password = SHA2(?, 512) where email = ?'
-        koneksi.query()
-    }
-}
-
-// // "use strict";
 const nodemailer = require("nodemailer");
-const jwt = require('jsonwebtoken')
-
-
-  let transporter = nodemailer.createTransport({
+let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     // secure: false, 
@@ -44,30 +11,49 @@ const jwt = require('jsonwebtoken')
     },
   });
 
-  
-  
-const tokenReset = jwt.sign({username:'anshar'}, 'hacker jangan menyerang', {algorithm:'HS256', expiresIn:'5m'})
-const body = `Apakah anda membutuhkan token untuk reset password, jika benar anda yanng meminta token untuk reset. Dibawah ini adalah token reset anda:
+module.exports = {
+    tampil(requ, resp) {
+        resp.render('lupa_password.ejs')
+    },
+    cekEmail(requ, resp) {
+        const email = requ.body.email
+        const verifEmail = 'select * from pengguna where email = ?'
+        const kodeReset = jwt.sign({email}, 'hacker jangan menyerang', {expiresIn:'5m', algorithm:'HS256'})
+        koneksi.query(verifEmail, email, (err, rows, field) => {
+            if (err) throw err
+            if (rows.length > 0) {
+                const body = `Apakah anda membutuhkan token untuk reset password, jika benar anda yanng meminta token untuk reset. Dibawah ini adalah token reset anda:
 
-Kode reset = ${tokenReset}`
+Kode reset = ${kodeReset}`
 
-transporter.sendMail({
-    from: 'muh.ansharazhari@gmail.com', 
-    to: "muh.ansharibrahim@gmail.com",
-    subject: "Reset Password dari web", 
-    text: body, 
+            transporter.sendMail({
+                from: 'muh.ansharazhari@gmail.com', 
+                to: email,
+                subject: "Reset Password dari web", 
+                text: body, 
 
-  },
-  (err, info) => {
-    if(err) throw err
-    console.log(info.response)
-  });
+            },
+            (err, info) => {
+                if(err) throw err
+                console.log(info.response)
+            })
+            resp.redirect('/cekkode')
 
+                return
+            } 
+            resp.send('email yang anda masukkan tidak terdaftar pada database kami')
+            return
+        }) 
 
-const token = '08820'
-  const test = `Apakah anda membutuhkan token untuk reset password, jika benar anda yanng meminta token untuk reset. 
-Dibawah ini adalah token reset anda:
-  
-token reset anda : ${token}`
+        
+    },
+    ubahPassword(requ, resp) {
+        const ubahPassword = 'update pengguna set password = SHA2(?, 512) where email = ?'
+        koneksi.query()
+        resp.send('ini')
+    },
+    tampilCekkode(requ, resp) {
+        resp.render('cek_kodereset.ejs')
+    }
+}
 
-  console.log(test)
