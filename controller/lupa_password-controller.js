@@ -45,7 +45,7 @@ Kode reset = ${kodeReset}`
             return
         }) 
 
-        
+
     },
     ubahPassword(requ, resp) {
         const ubahPassword = 'update pengguna set password = SHA2(?, 512) where email = ?'
@@ -54,6 +54,9 @@ Kode reset = ${kodeReset}`
     },
     tampilCekkode(requ, resp) {
         resp.render('cek_kodereset.ejs')
+    },
+    tampilUbahLupa(requ, resp) {
+        resp.render('ubah_lupapass')
     }
 }
 

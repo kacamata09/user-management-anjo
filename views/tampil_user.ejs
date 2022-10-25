@@ -5,20 +5,26 @@
         <li><a href="/user/register">Register User</a></li>
     </ul>
 <% if (users.length > 0) { %>
-    <table>
-        <tr>
-            <td>Nama</td>
-            <td>Email</td>
-            <td>Aksi</td>
-        </tr>
-        <% users.forEach((u) => { %>
-            <tr>
-                <td><%= u.nama %></td>
-                <td><%= u.email %></td>
-                <td><a href="/user/hapus/<%= u.id %>">Hapus</a></td>
-                <td><a href="/user/edit/<%= u.id %>">Edit</a></td>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr class="text-center">
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Aksi</th>
             </tr>
-        <% }) %>
+        </thead>
+        <tbody>
+            <% users.forEach((u) => { %>
+                <tr>
+                    <td><%= u.nama %></td>
+                    <td><%= u.email %></td>
+                    <td>
+                        <a class="btn btn-danger" href="/user/hapus/<%= u.id %>">Hapus</a>
+                        <a class="btn btn-primary" href="/user/edit/<%= u.id %>">Edit</a>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
     </table>
 <% } else { %>
     <h3>tidak ada data yang bisa ditampilkan</h3>
