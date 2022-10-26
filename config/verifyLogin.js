@@ -5,8 +5,8 @@ module.exports = {
             return;
         } else {
             req.session.destroy(function(err) {
-                // res.redirect('/login');
-                res.send('login dulu bro klik ini <a href="/login">Login<a>')
+                res.redirect('/login')
+                // res.send('login dulu bro klik ini <a href="/login">Login<a>')
             })
         }
     },
