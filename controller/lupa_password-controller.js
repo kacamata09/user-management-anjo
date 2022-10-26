@@ -49,7 +49,7 @@ Kode reset = ${kodeReset}`
     ubahPassword(requ, resp) {
         const ubahPassword = 'update pengguna set password = SHA2(?, 512) where email = ?'
         const cekEmail = 'select * from cek_email'
-        const password_baru = requ.body.password_baru
+        const password_baru = requ.body.passwordbaru
         const konfirmasi_password = requ.body.konfirpassword
         const hapusEmail = 'delete from cek_email'
 
@@ -57,21 +57,25 @@ Kode reset = ${kodeReset}`
             if (err) throw err
             if (rows.length > 0) {
                 const email = rows[0].email
-                if (password_baru === konfirmasi_password) {
+                console.log(email)
+                if (password_baru == konfirmasi_password) {
                     koneksi.query(ubahPassword, [password_baru, email], (err, rows, field) => {
                         if (err) throw err
                         koneksi.query(hapusEmail)
+                        resp.send('selamat password anda sudah berhasil diubah, silahkan login <a href="/login">Login</a>')
                         return
                     })
-                } 
-                resp.send('password baru dan konfirmasi password belum sejalan')
+                } else {
+                    resp.send('password baru dan konfirmasi password belum sejalan')
+                    return
+                }
+            } else {
+                resp.send('anda belum melakukan verifikasi token')
                 return
-            } 
-            resp.send('anda belum melakukan verifikasi token')
-            return
+            }
         })
-        resp.send('ini ada kesalahan')
-        return
+        // resp.send('ini ada kesalahan')
+        // return
     },
     tampilCekkode(requ, resp) {
         resp.render('cek_kodereset.ejs')
