@@ -6,8 +6,8 @@ let transporter = nodemailer.createTransport({
     port: 465,
     // secure: false, 
     auth: {
-      user: 'muh.ansharazhari@gmail.com', 
-      pass: 'mvhmlommxlosyynb', 
+      user: 'anshartestmail@gmail.com', 
+      pass: 'gfkyydhqvihvjdwj', 
     },
   });
 
@@ -37,12 +37,9 @@ Kode reset = ${kodeReset}`
                 if(err) throw err
                 console.log(info.response)
             })
-            
-            // simpan email ke dalam tabel email
-            koneksi.query('insert into cek_email values(?)', email)
+       
             resp.redirect('/cekkode')
-
-                return
+            return
             } 
             resp.send('email yang anda masukkan tidak terdaftar pada database kami')
             return
@@ -74,6 +71,7 @@ Kode reset = ${kodeReset}`
             return
         })
         resp.send('ini ada kesalahan')
+        return
     },
     tampilCekkode(requ, resp) {
         resp.render('cek_kodereset.ejs')
@@ -81,8 +79,12 @@ Kode reset = ${kodeReset}`
     cekKode(requ, resp) {
         const ambilKode = requ.body.kode
         const kodeReset = jwt.verify(ambilKode, 'hacker jangan menyerang', {algorithms:'HS256'})
-        if (kodeReset == true) {
-            resp.redirect('/login')
+        // console.log(kodeReset)
+        if (kodeReset) {
+            // simpan email ke dalam tabel email
+            koneksi.query('insert into cek_email values(?)', kodeReset.email, (err, rows, field) => {
+                resp.redirect('/ubahpass')
+            })
         }
     },
     tampilUbahLupa(requ, resp) {

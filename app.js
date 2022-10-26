@@ -62,6 +62,6 @@ app.get('/coba', (requ, resp) => {
 
 
 
-const PORT = 4000
+const PORT = 3000
 const display = `SERVER INI BERJALAN DI PORT : ${PORT}`
 app.listen(PORT, console.log(display))
