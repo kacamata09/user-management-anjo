@@ -33,7 +33,7 @@ app.use(session({
 
 // iniasiasi si ejs
 app.set('view engine', 'ejs')
-app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist')))
+app.use(express.static(path.join(__dirname, 'node_modules')))
 
 // bodyParser
 app.use(bodyParser.json())
@@ -49,6 +49,11 @@ app.use(logoutRoute)
 app.use(tampiUserRoute)
 app.use(ubahPasswordRoute)
 app.use(lupaPasswordRoute)
+
+// coba dashboard dari johan
+app.get('/coba', (requ, resp) => {
+    resp.render('index.ejs')
+})
 
 
 

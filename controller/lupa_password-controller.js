@@ -37,6 +37,9 @@ Kode reset = ${kodeReset}`
                 if(err) throw err
                 console.log(info.response)
             })
+            
+            // simpan email ke dalam tabel email
+            koneksi.query('insert into cek_email values(?)', email)
             resp.redirect('/cekkode')
 
                 return
@@ -61,14 +64,26 @@ Kode reset = ${kodeReset}`
                     koneksi.query(ubahPassword, [password_baru, email], (err, rows, field) => {
                         if (err) throw err
                         koneksi.query(hapusEmail)
+                        return
                     })
-                }
-            }
+                } 
+                resp.send('password baru dan konfirmasi password belum sejalan')
+                return
+            } 
+            resp.send('anda belum melakukan verifikasi token')
+            return
         })
-        resp.send('ini')
+        resp.send('ini ada kesalahan')
     },
     tampilCekkode(requ, resp) {
         resp.render('cek_kodereset.ejs')
+    },
+    cekKode(requ, resp) {
+        const ambilKode = requ.body.kode
+        const kodeReset = jwt.verify(ambilKode, 'hacker jangan menyerang', {algorithms:'HS256'})
+        if (kodeReset == true) {
+            resp.redirect('/login')
+        }
     },
     tampilUbahLupa(requ, resp) {
         resp.render('ubah_lupapass')
