@@ -25,7 +25,7 @@ module.exports = {
                 const body = `Apakah anda membutuhkan token untuk reset password, jika benar anda yanng meminta token untuk reset. Dibawah ini adalah token reset anda:
 
 Kode reset = ${kodeReset}`
-
+            requ.session.iniemail = true
             transporter.sendMail({
                 from: 'muh.ansharazhari@gmail.com', 
                 to: email,
@@ -82,13 +82,21 @@ Kode reset = ${kodeReset}`
     },
     cekKode(requ, resp) {
         const ambilKode = requ.body.kode
-        const kodeReset = jwt.verify(ambilKode, 'hacker jangan menyerang', {algorithms:'HS256'})
-        // console.log(kodeReset)
-        if (kodeReset) {
-            // simpan email ke dalam tabel email
-            koneksi.query('insert into cek_email values(?)', kodeReset.email, (err, rows, field) => {
-                resp.redirect('/ubahpass')
-            })
+        try {
+            const kodeReset = jwt.verify(ambilKode, 'hacker jangan menyerang', {algorithms:'HS256'})
+            // console.log(kodeReset)
+            if (kodeReset) {
+                // simpan email ke dalam tabel email
+                koneksi.query('insert into cek_email values(?)', kodeReset.email, (err, rows, field) => {
+                    resp.redirect('/ubahpass')
+                    return
+                })
+            } else {
+                
+                resp.send('anda belum memasukkan kodenya')
+        }
+        } catch(err) {
+            resp.send('ada kesalahan pada token anda, kemungkinan expire atau salah')
         }
     },
     tampilUbahLupa(requ, resp) {
