@@ -183,8 +183,8 @@
                               <td><%= u.email %></td>
                           
                           <td>
-                          <button type="button" class="btn btn-block btn-primary btn-xs" data-toggle="modal" href="/user/hapus/<%= u.id %>">Update</button>
-                          <button type="button" class="btn btn-block btn-danger btn-xs" href="/user/hapus/<%= u.id %>">Delete</button>
+                            <a class="btn btn-danger" href="/user/hapus/<%= u.id %>">Hapus</a>
+                            <a class="btn btn-primary" href="/user/edit/<%= u.id %>">Edit</a>
                         </td>
                       </tr>
                       </tr>
