@@ -1,6 +1,32 @@
 <%- include('snippets/head') %>
 
+<!--
+<div class="container-sm p-3">
+    <div class="row justify-content-center">
+        <div class="col-6">
 
+            <h3 class="text-center">Login Admin</h3>
+            <form action="/admin/login" method="POST">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
+                  </div>
+                  <div class="mb-3">
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" class="form-control" id="password" name="password">
+                  </div>
+                
+                <div class="row">
+                    <div class="col-6">
+                        <a href="/lupapassword">Lupa Password</a>
+                    </div>
+                </div>  
+                <button type="submit" class="btn btn-dark">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+-->
 <body class="hold-transition login-page">
     <div class="login-box">
       <!-- /.login-logo -->
@@ -9,11 +35,11 @@
           <a href="#" class="h1"><b>Admin</b>LTE</a>
         </div>
         <div class="card-body">
-          <p class="login-box-msg">Masukan username dan password</p>
+          <p class="login-box-msg">Sign in to start your session</p>
     
-          <form action="../../index3.html" method="post">
+          <form action="/admin/login" method="post">
             <div class="input-group mb-3">
-              <input type="email" class="form-control" placeholder="Email">
+              <input type="email" class="form-control" placeholder="email" id="email" name="email">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>
@@ -21,7 +47,7 @@
               </div>
             </div>
             <div class="input-group mb-3">
-              <input type="password" class="form-control" placeholder="Password">
+              <input type="password" class="form-control" placeholder="Password" id="name" name="email">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-lock"></span>
@@ -49,7 +75,7 @@
           <!-- /.social-auth-links -->
     
           <p class="mb-1">
-            <a href="forgot-password.html">I forgot my password</a>
+            <a href="/lupapassword">I forgot my password</a>
           </p>
         </div>
         <!-- /.card-body -->
@@ -60,4 +86,5 @@
     
   
 
+<%- include('snippets/footer') %>
     
