@@ -3,7 +3,7 @@ const koneksi = mysql.createConnection({
     host: 'localhost',
     user:'root',
     password:'PASSWORD_HERE',
-    database:'dbCoba'
+    database:'dbcoba'
 })
 
 koneksi.connect((err)=>{
