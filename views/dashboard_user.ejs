@@ -133,9 +133,8 @@
               <div class="col-8">
                 <div class="small-box bg-gradient-success">
                   <div class="inner">
-                    <h3><%= user.nama %></h3>
-                    <h2><%= user.email%></h2>
-                    <a href="/ubahpassword/<%= idUser.id %>">Ubah Password</a>
+                    <h3>Selamat datang <%= idUser.user.nama %></h3>
+                    <h5><%= idUser.user.email%></h5>
                   </div>
                   <div class="icon">
                     <i class="fas fa-user-plus"></i>
@@ -144,6 +143,7 @@
                     logout <i class="fas fa-arrow-circle-right"></i>
                   </a>
                 </div>
+                <a class="btn btn-dark" href="/ubahpassword/<%= idUser.id %>">Ubah Password</a>
               <!-- /.col -->
             </div>
             <!-- /.row -->
