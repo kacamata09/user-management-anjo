@@ -2,12 +2,13 @@ const koneksi = require('../config/database')
 
 module.exports = {
     tampilloginUser(requ, resp) {
-        const salahPassword = requ.flash('salah')
+        const salahPassword = requ.flash('passwordsalah')
         resp.render('login_user.ejs', {salahPassword})
     },
     tampilloginAdmin(requ, resp) {
         const salahPassword = requ.flash('passwordsalah')
-        resp.render('login_admin.ejs')
+        console.log(salahPassword)
+        resp.render('login_admin.ejs', {salahPassword})
     },
     login_user(requ, resp) {
         const getData = requ.body
@@ -23,7 +24,8 @@ module.exports = {
                 return
             } else {
                 requ.flash('passwordsalah', 'Password atau email yang anda masukkan salah')
-                resp.send('password atau email yang anda masukkan salah')
+                // resp.send('password atau email yang anda masukkan salah')
+                resp.redirect('/login')
                 return
             }
         })

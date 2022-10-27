@@ -18,9 +18,8 @@ const lupaPasswordRoute = require('./routes/lupa_password-routes')
 const flash = require('connect-flash')
 
 
-// inisiasi aplikasi dan flash
+// inisiasi aplikasi
 const app = express()
-app.use(flash())
 
 // session
 app.use(session({
@@ -33,6 +32,7 @@ app.use(session({
         maxAge: 600000 * 6 * 24
     },
 }))
+app.use(flash())
 
 // iniasiasi si ejs
 app.set('view engine', 'ejs')
@@ -56,6 +56,11 @@ app.use(lupaPasswordRoute)
 // coba dashboard dari johan
 app.get('/coba', (requ, resp) => {
     resp.render('index.ejs')
+})
+
+// coba flash
+app.get('/cobacoba', (requ, resp) => {
+    resp.render('cobaflash.ejs')
 })
 
 

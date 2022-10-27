@@ -135,7 +135,6 @@
                   <div class="inner">
                     <h1>Selamat datang <%= idUser.user.nama %></h1>
                     <h5><%= idUser.user.email %></h5>
-                <a class="btn btn-dark" href="/ubahpassword/<%= idUser.id %>">Ubah Password</a>
                   </div>
                   <div class="icon">
                     <i class="fas fa-user-plus"></i>
@@ -148,6 +147,7 @@
             </div>
             <!-- /.row -->
           </div>
+          <a class="btn btn-danger" href="/ubahpassword/<%= idUser.id %>">Ubah Password</a>
           <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
