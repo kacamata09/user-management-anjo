@@ -2,7 +2,8 @@ const koneksi = require("../config/database")
 
 module.exports = {
     tampil(requ, resp) {
-        resp.render('ubah_password.ejs')
+        const pesan = requ.flash('ubah')
+        resp.render('ubah_password.ejs', {pesan})
     },
     ubah(requ, resp) {
         const ambilUser = 'select * from pengguna where id = ?'
@@ -19,13 +20,15 @@ module.exports = {
                 if (rows.length > 0) {
                     koneksi.query(editPassword, [ambilPassword.password_baru, ambilId], (err, rows, field) => {
                         if (err) throw err
-                        resp.send('selamat password anda berhasil diperbarui')
+                        // resp.send('selamat password anda berhasil diperbarui')
+                        requ.flash('ubah', 'selamat password anda sudah diperbarui')
+                        resp.redirect('/ubahpassword/:id')
                         return
                     })
                 } else {
-                    resp.send('password lama anda salah')
-                    requ.flash('password lama yang anda masukkan salah')
-                    // resp.redirect('/ubahpassword/:id')
+                    // resp.send('password lama anda salah')
+                    requ.flash('ubah', 'Password lama yang anda masukkan salah')
+                    resp.redirect('/ubahpassword/:id')
                     return
                 }
 
