@@ -14,7 +14,8 @@ module.exports = {
             if (rows.length == 0) {
                 koneksi.query(simpanData, [getData.nama, getData.email, 'user', getData.password], (err, rows, field) => {
                     if(err) throw err
-                    resp.redirect('/user/register')
+                    // resp.redirect('/user/register')
+                    resp.redirect('/user')
                     return
                 })
 
