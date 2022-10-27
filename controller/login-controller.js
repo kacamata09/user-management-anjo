@@ -55,8 +55,8 @@ module.exports = {
         })
     },
     logout(requ, resp) {
+        requ.flash('logout', 'selamat anda telah berhasil logout')
         requ.session.destroy(function(err) {
-            requ.flash('logout', 'selamat anda telah berhasil logout')
             // resp.send('selamat anda berhasil logout, silahkan login <a href="/login">Login</a>')
             resp.redirect('/login');
         })
