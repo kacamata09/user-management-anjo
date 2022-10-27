@@ -29,7 +29,7 @@ app.use(session({
     name: 'secretName',
     cookie: {
         sameSite: true,
-        maxAge: 600000 * 6 * 24
+        maxAge: 600000
     },
 }))
 app.use(flash())
