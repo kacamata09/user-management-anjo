@@ -64,7 +64,7 @@ Kode reset = ${kodeReset}`
                     koneksi.query(ubahPassword, [password_baru, email], (err, rows, field) => {
                         if (err) throw err
                         koneksi.query(hapusEmail)
-                        requ.flash('login', 'selamat password anda berhasil diubah')
+                        requ.flash('login', 'Selamat password anda berhasil diubah')
                         resp.redirect('/login')
                         // resp.send('selamat password anda sudah berhasil diubah, silahkan login <a href="/login">Login</a>')
                         return
