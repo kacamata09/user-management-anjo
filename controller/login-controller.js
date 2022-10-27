@@ -2,12 +2,14 @@ const koneksi = require('../config/database')
 
 module.exports = {
     tampilloginUser(requ, resp) {
-        const salahPassword = requ.flash('salah')
-        resp.render('login_user.ejs', {salahPassword})
+        const pesan = requ.flash('login')
+        console.log(pesan)
+        resp.render('login_user.ejs', {pesan})
     },
     tampilloginAdmin(requ, resp) {
-        const salahPassword = requ.flash('passwordsalah')
-        resp.render('login_admin.ejs')
+        const pesan = requ.flash('login')
+        console.log(pesan)
+        resp.render('login_admin.ejs', {pesan})
     },
     login_user(requ, resp) {
         const getData = requ.body
@@ -22,8 +24,9 @@ module.exports = {
                 resp.redirect('/')
                 return
             } else {
-                requ.flash('passwordsalah', 'Password atau email yang anda masukkan salah')
-                resp.send('password atau email yang anda masukkan salah')
+                requ.flash('login', 'Password atau email yang anda masukkan salah')
+                // resp.send('password atau email yang anda masukkan salah')
+                resp.redirect('/login')
                 return
             }
         })
@@ -42,24 +45,27 @@ module.exports = {
                     resp.redirect('/admin')
                     return
                 } else {
-                    requ.flash('admin', 'Akun yang anda masukkan bukanlah akun admin melainkan akun user')
-                    resp.send('akun yang anda masukkan bukanlah akun admin melainkan user')
+                    requ.flash('login', 'Akun yang anda masukkan bukanlah akun admin melainkan akun user')
+                    // resp.send('akun yang anda masukkan bukanlah akun admin melainkan user')
+                    resp.redirect('/admin/login')
                     return
                 }
             } else {
-                requ.flash('salah', 'Password atau email yang anda masukkan salah')
-                resp.send('password atau email yang anda masukkan salah')
+                requ.flash('login', 'Password atau email yang anda masukkan salah')
+                // resp.send('password atau email yang anda masukkan salah')
+                resp.redirect('/admin/login')
+                // resp.send('password atau email yang anda masukkan salah')
                 // resp.redirect('/admin/login')
                 return
             }
         })
     },
     logout(requ, resp) {
-        requ.flash('logout', 'selamat anda telah berhasil logout')
+        // requ.flash('login', 'Selamat anda telah berhasil logout')
         requ.session.destroy(function(err) {
             // resp.send('selamat anda berhasil logout, silahkan login <a href="/login">Login</a>')
-            resp.redirect('/login');
         })
+        resp.redirect('/login');
     }
 
 }

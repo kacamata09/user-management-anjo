@@ -8,12 +8,21 @@
 </head>
 <body>
 
+  <div class="alert alert-danger d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+    
+    <% pesan.forEach(p => { %>
+    <div>
+      <%= p %>
+    </div>
+    <% }) %>
+  </div>
   <h1>Hello world</h1>
   <% pesan.forEach(p => { %>
 
     <h3><%= p %></h3>
     
   <% }) %>
-  
+
 </body>
 </html>
