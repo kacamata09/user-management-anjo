@@ -41,6 +41,8 @@ Kode reset = ${kodeReset}`
             resp.redirect('/cekkode')
             return
             } 
+            requ.flash('info', 'email yang anda masukkan tidak terdaftar pada database kami')
+            // resp.redirect('/lupapassword')
             resp.send('email yang anda masukkan tidak terdaftar pada database kami')
             return
         }) 
@@ -62,15 +64,19 @@ Kode reset = ${kodeReset}`
                     koneksi.query(ubahPassword, [password_baru, email], (err, rows, field) => {
                         if (err) throw err
                         koneksi.query(hapusEmail)
+                        requ.flash('info', 'selamat password anda berhasil diubah')
+                        resp.redirect('/login')
                         resp.send('selamat password anda sudah berhasil diubah, silahkan login <a href="/login">Login</a>')
                         return
                     })
                 } else {
+                    requ.flash('salah', 'Password baru dan konfirmasi password belum sejalan')
                     resp.send('password baru dan konfirmasi password belum sejalan')
                     return
                 }
             } else {
-                resp.send('anda belum melakukan verifikasi token')
+                requ.flash('kodereset', 'Anda belum melakukan verifikasi kode reset')
+                resp.send('anda belum melakukan verifikasi kode reset')
                 return
             }
         })
@@ -96,7 +102,9 @@ Kode reset = ${kodeReset}`
                 resp.send('anda belum memasukkan kodenya')
         }
         } catch(err) {
-            resp.send('ada kesalahan pada token anda, kemungkinan expire atau salah')
+            requ.flash('tokensalah', 'ada kesalahan pada kode yang anda masukkan, kemungkinan expire atau salah')
+            resp.send('ada kesalahan pada kode yang anda masukkan, kemungkinan expire atau salah')
+            // resp.redirect('/cekkode')
         }
     },
     tampilUbahLupa(requ, resp) {

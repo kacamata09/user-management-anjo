@@ -24,6 +24,8 @@ module.exports = {
                     })
                 } else {
                     resp.send('password lama anda salah')
+                    requ.flash('password lama yang anda masukkan salah')
+                    // resp.redirect('/ubahpassword/:id')
                     return
                 }
 
