@@ -2,9 +2,11 @@ const koneksi = require('../config/database')
 
 module.exports = {
     tampilloginUser(requ, resp) {
-        resp.render('login_user.ejs')
+        const salahPassword = requ.flash('salah')
+        resp.render('login_user.ejs', {salahPassword})
     },
     tampilloginAdmin(requ, resp) {
+        const salahPassword = requ.flash('passwordsalah')
         resp.render('login_admin.ejs')
     },
     login_user(requ, resp) {
@@ -20,6 +22,7 @@ module.exports = {
                 resp.redirect('/')
                 return
             } else {
+                requ.flash('passwordsalah', 'Password atau email yang anda masukkan salah')
                 resp.send('password atau email yang anda masukkan salah')
                 return
             }
@@ -39,19 +42,23 @@ module.exports = {
                     resp.redirect('/admin')
                     return
                 } else {
+                    requ.flash('admin', 'Akun yang anda masukkan bukanlah akun admin melainkan akun user')
                     resp.send('akun yang anda masukkan bukanlah akun admin melainkan user')
                     return
                 }
             } else {
+                requ.flash('salah', 'Password atau email yang anda masukkan salah')
                 resp.send('password atau email yang anda masukkan salah')
+                // resp.redirect('/admin/login')
                 return
             }
         })
     },
     logout(requ, resp) {
         requ.session.destroy(function(err) {
-            // res.redirect('/login');
-            resp.send('selamat anda berhasil logout, silahkan login <a href="/login">Login</a>')
+            requ.flash('logout', 'selamat anda telah berhasil logout')
+            // resp.send('selamat anda berhasil logout, silahkan login <a href="/login">Login</a>')
+            resp.redirect('/login');
         })
     }
 

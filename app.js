@@ -14,10 +14,13 @@ const tampiUserRoute = require('./routes/tampil_user-router')
 const ubahPasswordRoute = require('./routes/ubah_password-router')
 const lupaPasswordRoute = require('./routes/lupa_password-routes')
 
+// inisiasi flash
+const flash = require('connect-flash')
 
 
-// inisiasi aplikasi
+// inisiasi aplikasi dan flash
 const app = express()
+app.use(flash())
 
 // session
 app.use(session({

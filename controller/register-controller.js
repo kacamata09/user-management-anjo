@@ -20,8 +20,9 @@ module.exports = {
                 })
 
             } else {
+                requ.flash('email', 'email yang anda masukkan sudah ada pada database kami, silahkan masukkan email lain')
                 resp.send('email yang anda masukkan sudah ada, silahkan masukkan email yang baru')
-                // resp.redirect('/user/regiter')
+                // resp.redirect('/user')
                 return
             }
         })
