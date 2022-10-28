@@ -6,10 +6,10 @@ module.exports = {
         resp.render('register.ejs')
     },
     tampilFlash(requ, resp) {
-        
+
     },
     tambah(requ, resp) {
-        const simpanData = 'insert into pengguna(nama, email, role, password, status) values(?,?,?,SHA2(?,512), "aman")'
+        const simpanData = 'insert into pengguna(nama, email, role, password, status) values(?,?,?,SHA2(?,512), "aktif")'
         const getData = requ.body
         const cariData = 'select * from pengguna where email = ?'
         if (getData.password != getData.confirmPassword) {

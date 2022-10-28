@@ -1,13 +1,14 @@
 const koneksi = require('../config/database')
 const jwt = require('jsonwebtoken')
 const nodemailer = require("nodemailer");
+const PASSW = 'dfoydwedcibzhead'
 let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     // secure: false, 
     auth: {
       user: 'anshartestmail@gmail.com', 
-      pass: 'gfkyydhqvihvjdwj', 
+      pass: PASSW, 
     },
   });
 
@@ -22,9 +23,10 @@ module.exports = {
         koneksi.query(verifEmail, email, (err, rows, field) => {
             if (err) throw err
             if (rows.length > 0) {
-                const body = `Apakah anda membutuhkan token untuk reset password, jika benar anda yanng meminta token untuk reset. Dibawah ini adalah token reset anda:
+                const body = `Apakah anda membutuhkan token untuk reset password, jika benar anda yanng meminta token untuk reset. Dibawah ini adalah link token reset anda:
 
-Kode reset = ${kodeReset}`
+Reset Password =  http:localhost:3000/cekkode/${kodeReset}`
+
             requ.session.iniemail = true
             transporter.sendMail({
                 from: 'muh.ansharazhari@gmail.com', 
@@ -38,7 +40,7 @@ Kode reset = ${kodeReset}`
                 console.log(info.response)
             })
        
-            resp.redirect('/cekkode')
+            resp.redirect('https://mail.google.com/mail/u/0/#inbox')
             return
             } 
             requ.flash('info', 'email yang anda masukkan tidak terdaftar pada database kami')
@@ -53,7 +55,7 @@ Kode reset = ${kodeReset}`
         const cekEmail = 'select * from cek_email'
         const password_baru = requ.body.passwordbaru
         const konfirmasi_password = requ.body.konfirpassword
-        const hapusEmail = 'delete from cek_email'
+        const hapusEmail = 'delete from cek_email where email = ?'
 
         koneksi.query(cekEmail, (err, rows, field) => {
             if (err) throw err
@@ -63,7 +65,7 @@ Kode reset = ${kodeReset}`
                 if (password_baru == konfirmasi_password) {
                     koneksi.query(ubahPassword, [password_baru, email], (err, rows, field) => {
                         if (err) throw err
-                        koneksi.query(hapusEmail)
+                        koneksi.query(hapusEmail, email)
                         requ.flash('login', 'Selamat password anda berhasil diubah')
                         resp.redirect('/login')
                         // resp.send('selamat password anda sudah berhasil diubah, silahkan login <a href="/login">Login</a>')
@@ -84,7 +86,22 @@ Kode reset = ${kodeReset}`
         // return
     },
     tampilCekkode(requ, resp) {
-        resp.render('cek_kodereset.ejs')
+        // resp.render('cek_kodereset.ejs')
+        const ambilKode = requ.params.token
+        try {
+            const kodeReset = jwt.verify(ambilKode, 'hacker jangan menyerang', {algorithms:'HS256'})
+            // console.log(kodeReset)
+                // simpan email ke dalam tabel email
+                koneksi.query('insert into cek_email values(?)', kodeReset.email, (err, rows, field) => {
+                    resp.redirect('/ubahpass')
+                    return
+                })
+           
+        } catch(err) {
+            requ.flash('tokensalah', 'ada kesalahan pada kode yang anda masukkan, kemungkinan expire atau salah')
+            resp.send('ada kesalahan pada kode yang anda masukkan, kemungkinan expire atau salah')
+            // resp.redirect('/cekkode')
+        }
     },
     cekKode(requ, resp) {
         const ambilKode = requ.body.kode

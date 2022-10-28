@@ -12,7 +12,7 @@ module.exports = {
                     resp.redirect('/user')
                 })
             } else {
-                koneksi.query(simpanData, ['aman', ambilId], (err, rows, field)=> {
+                koneksi.query(simpanData, ['aktif', ambilId], (err, rows, field)=> {
                     if (err) throw err
                     resp.redirect('/user')
                 })

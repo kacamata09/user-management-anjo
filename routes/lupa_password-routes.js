@@ -6,8 +6,8 @@ const lupaPassRouter = express.Router()
 
 lupaPassRouter.get('/lupapassword', controllerLupapass.tampil)
 lupaPassRouter.post('/lupapassword', controllerLupapass.cekEmail)
-lupaPassRouter.get('/cekkode', midwareKode.isKirimEmail, controllerLupapass.tampilCekkode)
-lupaPassRouter.post('/cekkode', controllerLupapass.cekKode)
+lupaPassRouter.get('/cekkode/:token', midwareKode.isKirimEmail, controllerLupapass.tampilCekkode)
+// lupaPassRouter.post('/cekkode:/token', controllerLupapass.cekKode)
 
 // jangan lupa buat middleware verifikasi tokennya ini
 lupaPassRouter.get('/ubahpass', midwareKode.isMasukkanKode, controllerLupapass.tampilUbahLupa)
