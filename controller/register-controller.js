@@ -6,7 +6,7 @@ module.exports = {
         resp.render('register.ejs')
     },
     tambah(requ, resp) {
-        const simpanData = 'insert into pengguna(nama, email, role, password) values(?,?,?,SHA2(?,512))'
+        const simpanData = 'insert into pengguna(nama, email, role, password, status) values(?,?,?,SHA2(?,512), "aman")'
         const getData = requ.body
         const cariData = 'select * from pengguna where email = ?'
         koneksi.query(cariData, requ.body.email, (err, rows, field) => {

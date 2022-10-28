@@ -26,7 +26,7 @@ module.exports = {
         
         } else {
             // resp.send('anda belum login, silahkan <a href="/admin/login" >silahkan login dulu</a>')
-            resp.redirect('/admin/login')
+            resp.redirect('/login')
             return
         }
 } 

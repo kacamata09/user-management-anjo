@@ -25,6 +25,13 @@ module.exports = {
         koneksi.query(cariUser, [getData.email, getData.password], (err, rows, field) => {
             if (err) throw err
             if (rows.length > 0) {
+
+                if (rows[0].status == 'blokir') {
+                    requ.flash('login', 'Akun anda di blokir, silahkan hubungi admin mengapa akun anda di blokir, apakah kamu ada salah ke dia')
+                    resp.redirect('/login')
+                    return
+                }
+                
                 requ.session.loggedin = true;
                 requ.session.userid = rows[0].id;
                 requ.session.username = rows[0].nama;
@@ -58,7 +65,7 @@ module.exports = {
                 } else {
                     requ.flash('login', 'Akun yang anda masukkan bukanlah akun admin melainkan akun user')
                     // resp.send('akun yang anda masukkan bukanlah akun admin melainkan user')
-                    resp.redirect('/admin/login')
+                    resp.redirect('/login')
                     return
                 }
             } else {
