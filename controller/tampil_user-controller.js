@@ -13,7 +13,6 @@ module.exports = {
     hapus(requ, resp) {
         const hapusData = 'delete from pengguna where id = ?'
         const ambilId = requ.params.id
-
         koneksi.query(hapusData, ambilId, (err, rows, field)=> {
             if (err) throw err
             resp.redirect('/user')

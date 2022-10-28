@@ -13,7 +13,6 @@ module.exports = {
             console.log(getUser)
             koneksi.query(queryGetRole, getUser, (err, rows, field) => {
                if (err) throw err
-
                 if (rows[0].role == 'admin') {
                     next()
                     return

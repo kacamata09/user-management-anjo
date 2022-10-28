@@ -173,6 +173,7 @@
                         <th>id</th>
                         <th>Nama</th>
                         <th>Email</th>
+                        <th>Status</th>
                         <th>Aksi</th>
                       </tr>
                       </thead>
@@ -182,39 +183,41 @@
                               <td><%= u.id %></td>
                               <td><%= u.nama %></td>
                               <td><%= u.email %></td>
+                              <td><%= u.status %></td>
                           
                           <td>
                             <a class="btn btn-danger"  data-toggle="modal" data-target="#modal-danger">Hapus</a>
                             <a class="btn btn-primary" href="/user/edit/<%= u.id %>">Edit</a>
-                            
-                <div class="modal fade" id="modal-danger">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h4 class="modal-title">Hapus Data</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <p>apakah ada yakani ini menghapus data?&hellip;</p>
-                      </div>
-                      <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <a type="button" class="btn btn-danger" href="/user/hapus/<%= u.id %>">DELETE</a>
-                      </div>
-                    </div>
-                    <!-- /.modal-content -->
-                  </div>
-                  <!-- /.modal-dialog -->
-                </div>
-                <!-- /.modal -->
+                            <a class="btn btn-warning" href="/user/blokir/<%= u.id %>">Ubah Status</a>
                         </td>
                       </tr>
                       </tr>
-                      <% }) %>
                     </tbody>
-                </table>
+                  </table>
+
+                  <div class="modal fade" id="modal-danger">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Hapus Data</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>apakah anda yakin menghapus data?&hellip;</p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <a type="button" class="btn btn-danger" href="/user/hapus/<%= u.id %>">DELETE</a>
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                  </div>
+                  <!-- /.modal -->
+                  <% }) %>
             <% } else { %>
                 <h3>tidak ada data yang bisa ditampilkan</h3>
             <% } %>
