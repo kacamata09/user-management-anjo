@@ -5,10 +5,16 @@ module.exports = {
         // console.log()
         resp.render('register.ejs')
     },
+    tampilFlash(requ, resp) {
+        
+    },
     tambah(requ, resp) {
         const simpanData = 'insert into pengguna(nama, email, role, password, status) values(?,?,?,SHA2(?,512), "aman")'
         const getData = requ.body
         const cariData = 'select * from pengguna where email = ?'
+        if (getData.password != getData.confirmPassword) {
+            requ.flash('password', 'Password anda tidak sama')
+        }
         koneksi.query(cariData, requ.body.email, (err, rows, field) => {
             if (err) throw err
             if (rows.length == 0) {
