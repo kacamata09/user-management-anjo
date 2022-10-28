@@ -28,6 +28,10 @@ module.exports = {
                 requ.session.loggedin = true;
                 requ.session.userid = rows[0].id;
                 requ.session.username = rows[0].nama;
+                if (rows[0].role == 'admin') {
+                    resp.redirect('/admin')
+                    return
+                }
                 resp.redirect('/')
                 return
             } else {
