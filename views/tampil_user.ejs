@@ -186,6 +186,7 @@
                           <td>
                             <a class="btn btn-danger"  data-toggle="modal" data-target="#modal-danger">Hapus</a>
                             <a class="btn btn-primary" href="/user/edit/<%= u.id %>">Edit</a>
+                            <a class="btn btn-warning" href="#">Blokir user</a>
                             
                 <div class="modal fade" id="modal-danger">
                   <div class="modal-dialog">
@@ -274,11 +275,13 @@
                               <input type="password" class="form-control" id="password" name="password" placeholder="password" minlength="8" required>
                             </div>
                           </div>
+
+                          
                         
                       </div>
                       <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" name="simpan" class="btn btn-primary">
+                        <input type="submit" name="simpan" class="btn btn-primary" id="submitBtn">
                       </form>
                       </div>
                     </div>
