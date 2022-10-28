@@ -198,7 +198,8 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <p>apakah ada yakani ini menghapus data?&hellip;</p>
+                        <p>apakah ada yakin menghapus data user?</p>
+                        <h4>Dengan Nama = <%= u.nama %></h4>
                       </div>
                       <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -285,7 +286,7 @@
                                 var password = document.getElementById("password").value;
                                 var confirmPassword = document.getElementById("confirmPassword").value;
                                 if (password != confirmPassword) {
-                                    alert("Passwords do not match.");
+                                    alert("Passwords Tidak sesuai!");
                                     return false;
                                 }
                                 return true;
