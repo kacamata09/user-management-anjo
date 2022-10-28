@@ -36,7 +36,7 @@ app.use(flash())
 
 // iniasiasi si ejs
 app.set('view engine', 'ejs')
-app.use(express.static(path.join(__dirname, 'node_modules')))
+app.use(express.static(path.join(__dirname, 'static')))
 
 // bodyParser
 app.use(bodyParser.json())
