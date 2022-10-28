@@ -14,8 +14,11 @@ module.exports = {
     login_user(requ, resp) {
         const getData = requ.body
         const cariUser = 'select * from pengguna where email = ? and password = SHA2(?,512)'
+        if (getData.ingat == '1') {
+            koneksi.query('insert into session values(?)', getData.email, (err, rows, field) => {})
 
-        koneksi.query(cariUser, [requ.body.email, requ.body.password], (err, rows, field) => {
+        }
+        koneksi.query(cariUser, [getData.email, getData.password], (err, rows, field) => {
             if (err) throw err
             if (rows.length > 0) {
                 requ.session.loggedin = true;

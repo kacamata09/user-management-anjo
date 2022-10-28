@@ -1,0 +1,1 @@
+const koneksi = require('../config/database')
