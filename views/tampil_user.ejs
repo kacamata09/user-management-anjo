@@ -184,8 +184,31 @@
                               <td><%= u.email %></td>
                           
                           <td>
-                            <a class="btn btn-danger" href="/user/hapus/<%= u.id %>">Hapus</a>
+                            <a class="btn btn-danger"  data-toggle="modal" data-target="#modal-danger">Hapus</a>
                             <a class="btn btn-primary" href="/user/edit/<%= u.id %>">Edit</a>
+                            
+                <div class="modal fade" id="modal-danger">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Hapus Data</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>apakah ada yakani ini menghapus data?&hellip;</p>
+                      </div>
+                      <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <a type="button" class="btn btn-danger" href="/user/hapus/<%= u.id %>">DELETE</a>
+                      </div>
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
                         </td>
                       </tr>
                       </tr>
@@ -243,12 +266,12 @@
                                   <input type="text" class="form-control" id="role" name="role" value="user" disabled>
                                       
                                   <label for="email">email</label>
-                                  <input type="email" class="form-control" id="email" name="email" placeholder="masukan email">
+                                  <input type="email" class="form-control" id="email" name="email" placeholder="masukan email" required>
                                       
                                  
                             <div class="form-group">
                               <label for="password">Password</label>
-                              <input type="password" class="form-control" id="password" name="password" placeholder="password">
+                              <input type="password" class="form-control" id="password" name="password" placeholder="password" minlength="8" required>
                             </div>
                           </div>
                         
@@ -267,28 +290,6 @@
                 </div>
                 </div>
     
-                <div class="modal fade" id="modal-danger">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h4 class="modal-title">Hapus Data</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <p>apakah ada yakani ini menghapus data?&hellip;</p>
-                      </div>
-                      <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger">DELETE</button>
-                      </div>
-                    </div>
-                    <!-- /.modal-content -->
-                  </div>
-                  <!-- /.modal-dialog -->
-                </div>
-                <!-- /.modal -->
     
     
     
