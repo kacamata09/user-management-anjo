@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const path = require('path')
+const cookieParser = require('cookie-parser')
 
 // routes
 const adminRoute = require('./routes/hal_admin-router')
@@ -32,6 +33,7 @@ app.use(session({
         maxAge: 600000
     },
 }))
+app.use(cookieParser())
 app.use(flash())
 
 // iniasiasi si ejs

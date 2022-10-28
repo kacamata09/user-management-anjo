@@ -14,10 +14,14 @@ module.exports = {
     login_user(requ, resp) {
         const getData = requ.body
         const cariUser = 'select * from pengguna where email = ? and password = SHA2(?,512)'
-        if (getData.ingat == '1') {
-            koneksi.query('insert into session values(?)', getData.email, (err, rows, field) => {})
+        if (getData.ingat === '1') {
+            koneksi.query('insert into session values(?)', getData.email, (err, rows, field) => {
+                resp.cookie('email', getData.email)
+            })
 
         }
+        console.log(requ.cookies.email)
+        console.log(getData.ingat)
         koneksi.query(cariUser, [getData.email, getData.password], (err, rows, field) => {
             if (err) throw err
             if (rows.length > 0) {
@@ -65,6 +69,8 @@ module.exports = {
     },
     logout(requ, resp) {
         // requ.flash('login', 'Selamat anda telah berhasil logout')
+        const email = requ.cookies.email
+        koneksi.query('delete from session where email = ?', email)
         requ.session.destroy(function(err) {
             // resp.send('selamat anda berhasil logout, silahkan login <a href="/login">Login</a>')
         })
