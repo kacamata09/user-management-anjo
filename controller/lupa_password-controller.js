@@ -1,7 +1,7 @@
 const koneksi = require('../config/database')
 const jwt = require('jsonwebtoken')
 const nodemailer = require("nodemailer");
-const PASSW = 'dfoydwedcibzhead'
+const PASSW = 'ifnahgglwaoqhmck'
 let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -42,7 +42,7 @@ Reset Password = localhost:3000/cekkode/${kodeReset}`
                 console.log(info.response)
             })
        
-            resp.render('halaman_error/token_kadaluarsa.ejs')
+            resp.render('halaman_error/liat_email.ejs')
             return
             } 
             requ.flash('info', 'email yang anda masukkan tidak terdaftar pada database kami')
@@ -102,7 +102,7 @@ Reset Password = localhost:3000/cekkode/${kodeReset}`
         } catch(err) {
             requ.flash('tokensalah', 'ada kesalahan pada kode yang anda masukkan, kemungkinan expire atau salah')
             // resp.send('ada kesalahan pada kode yang anda masukkan, kemungkinan expire atau salah')
-            resp.render('hal_error/token_kadaluarsa')
+            resp.render('halaman_error/token_kadaluarsa.ejs')
             // resp.redirect('/cekkode')
         }
     },
