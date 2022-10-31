@@ -23,24 +23,26 @@ module.exports = {
         koneksi.query(verifEmail, email, (err, rows, field) => {
             if (err) throw err
             if (rows.length > 0) {
-                const body = `Apakah anda membutuhkan token untuk reset password, jika benar anda yanng meminta token untuk reset. Dibawah ini adalah link token reset anda:
+                const linKReset = `<h2>Apakah anda membutuhkan token untuk reset password, jika benar anda yanng meminta token untuk reset. Dibawah ini adalah link reset password anda: </h2> <br> <br> Reset Password = <a href = "localhost:3000/cekkode/${kodeReset}">Ini link reset password anda</a>`
+                const pesanKode = `Apakah anda membutuhkan token untuk reset password, jika benar anda yanng meminta token untuk reset. Dibawah ini adalah link reset password anda:
 
-Reset Password =  http:localhost:3000/cekkode/${kodeReset}`
+Reset Password = localhost:3000/cekkode/${kodeReset}`
 
             requ.session.iniemail = true
             transporter.sendMail({
                 from: 'muh.ansharazhari@gmail.com', 
                 to: email,
                 subject: "Reset Password dari web", 
-                text: body, 
-
+                text: pesanKode, 
+                // html: linKReset
+                
             },
             (err, info) => {
                 if(err) throw err
                 console.log(info.response)
             })
        
-            resp.redirect('https://mail.google.com/mail/u/0/#inbox')
+            resp.render('halaman_error/token_kadaluarsa.ejs')
             return
             } 
             requ.flash('info', 'email yang anda masukkan tidak terdaftar pada database kami')
@@ -77,7 +79,7 @@ Reset Password =  http:localhost:3000/cekkode/${kodeReset}`
                     return
                 }
             } else {
-                requ.flash('kodereset', 'Anda belum melakukan verifikasi kode reset')
+                requ.flash('kodereset', 'Anda belum melakukan verinodemnfikasi kode reset')
                 resp.send('anda belum melakukan verifikasi kode reset')
                 return
             }
@@ -99,7 +101,8 @@ Reset Password =  http:localhost:3000/cekkode/${kodeReset}`
            
         } catch(err) {
             requ.flash('tokensalah', 'ada kesalahan pada kode yang anda masukkan, kemungkinan expire atau salah')
-            resp.send('ada kesalahan pada kode yang anda masukkan, kemungkinan expire atau salah')
+            // resp.send('ada kesalahan pada kode yang anda masukkan, kemungkinan expire atau salah')
+            resp.render('hal_error/token_kadaluarsa')
             // resp.redirect('/cekkode')
         }
     },
