@@ -5,19 +5,21 @@ module.exports = {
             next()
             return
         }
-        resp.send('anda belum mengirim kode reset ke email')
+        // resp.send('anda belum mengirim kode reset ke email')
+        resp.render('halaman_error/cek_email')
     },
     isMasukkanKode(requ, resp, next) {
         // requ.session.destroy()
-        requ.session.destroy(function(err) {} )
-        const cariEmail = 'select * from cek_email'
-        koneksi.query(cariEmail, (err, rows, field) => {
+        const email = requ.session.iniemail
+        const cariEmail = 'select * from cek_email where email = ?'
+        koneksi.query(cariEmail, email, (err, rows, field) => {
             if (err) throw err
             if (rows.length > 0) {
+                
                 next()
                 return
             } else {
-                resp.send('anda belum memasukkan token')
+                resp.render('halaman_error/verif_token')
             }
         })
     }

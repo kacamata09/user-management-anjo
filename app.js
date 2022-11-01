@@ -65,6 +65,12 @@ app.get('/cobacoba', (requ, resp) => {
     resp.render('cobaflash.ejs')
 })
 
+// coba link
+app.get('/inilink', (requ, resp) => {
+    const link = 'mail'
+    resp.send(`${'MDN'.link(`https://${link}.google.com`)}`)
+})
+
 
 
 
