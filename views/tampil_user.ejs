@@ -189,7 +189,7 @@
                             
                             <!-- <a class="btn btn-danger" onclick="return confirm('Yakin Hapus')" href="/user/hapus/<%= u.id %>">Hapus</a> -->
                             <!-- <a class="btn btn-danger" onclick="return myFunction('<%= u.id %>')">Hapus</a> -->
-                            <button type="button" id="hapusUserid" class="btn btn-success"  onclick="return myFunction('<%= u.id %>')" value="<%= u.id %>" data-toggle="modal" data-target="#modal-danger">Hapus</button>
+                            <button type="button" id="hapusUserid" class="btn btn-danger"  onclick="return myFunction('<%= u.id %>', '<%= u.nama %>')" data-toggle="modal" data-target="#modal-danger">Hapus</button>
 
                             <a class="btn btn-primary" href="/user/edit/<%= u.id %>">Edit</a>
                             <a class="btn btn-warning" href="/user/blokir/<%= u.id %>">Ubah Status</a>
@@ -204,8 +204,8 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <p>apakah ada yakin menghapus data user?</p>
-                       
+                        <p id="pesan"></p>
+
                         <a  class="btn btn-danger" id="hapusUser">DELETE</a>
                       </div>
                     </div>
@@ -223,13 +223,16 @@
 
                               //   hapus.setAttribute('href', `/user/hapus/${idUserHapus.value}`)
                               // })
-                            function myFunction(urlnya) {
+                            function myFunction(idnya, namanya) {
                               // alert("hapus data !");
                         
                               // const idUser = document.getElementById('hapusUserid')
                               const hapus = document.getElementById('hapusUser')
+                              const nama = document.getElementById('pesan')
                               // hapus.setAttribute('modal', 'show')
-                              hapus.setAttribute('href', `/user/hapus/${urlnya}`)
+                              nama.innerText = `apakah ada yakin menghapus data user yang bernama ${namanya}`
+                              hapus.setAttribute('href', `/user/hapus/${idnya}`)
+
                               // idUser.addEventListener('onclick', () => {
                               //   hapus.setAttribute('href', `/user/hapus/${idUser.value}`)
                               // })
