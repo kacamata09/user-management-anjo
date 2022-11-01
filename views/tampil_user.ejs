@@ -186,10 +186,13 @@
                               <td><%= u.status %></td>
                           
                           <td>
-                            <a class="btn btn-danger" onclick="myFunction()" href="/user/hapus/<%= u.id %>">Hapus</a>
+                            
+                            <a class="btn btn-danger" onclick="return confirm('Yakin Hapus')" href="/user/hapus/<%= u.id %>">Hapus</a>
+                            <!-- <button type="button" id="hapusUserid" class="btn btn-success" onclick="myFunction()" value="<%= u.id %>" data-toggle="modal" data-target="#modal-danger">Hapus</button> -->
+
                             <a class="btn btn-primary" href="/user/edit/<%= u.id %>">Edit</a>
                             <a class="btn btn-warning" href="/user/blokir/<%= u.id %>">Ubah Status</a>
-                  <!--
+                  
                 <div class="modal fade" id="modal-danger">
                   <div class="modal-dialog">
                     <div class="modal-content">
@@ -201,16 +204,38 @@
                       </div>
                       <div class="modal-body">
                         <p>apakah ada yakin menghapus data user?</p>
-                        <h4>Dengan Nama = <%= u.nama %> </h4>
-                        <a  class="btn btn-danger" href="/user/hapus/<%= u.id %>">DELETE</a>
+                       
+                        <a  class="btn btn-danger" id="hapusUser">DELETE</a>
                       </div>
                     </div>
                   </div>
-                </div>-->
+                </div>
+
                           <script>
+                              // const idUser = document.getElementById('hapusUserid')
+                              // const hapus = document.getElementById('hapusUser')
+                              // // hapus.setAttribute('href', `/user/hapus/${idUser.value}`)
+                              // idUser.addEventListener('click', () => {
+                              //   const modalMuncul = document.getElementById('modal-danger')
+                                
+                              //   const idUserHapus = document.getElementById('hapusUserid')
+
+                              //   hapus.setAttribute('href', `/user/hapus/${idUserHapus.value}`)
+                              // })
                             function myFunction() {
-                              alert("hapus data !");
+                              // alert("hapus data !");
+                            
+
+                              const idUser = document.getElementById('hapusUserid')
+                              const hapus = document.getElementById('hapusUser')
+                              hapus.setAttribute('href', `/user/hapus/${this.value}`)
+                              // idUser.addEventListener('onclick', () => {
+                              //   hapus.setAttribute('href', `/user/hapus/${idUser.value}`)
+                              // })
+
+
                             }
+
                             </script>
 
                         </td>
