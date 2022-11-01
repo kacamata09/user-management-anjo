@@ -187,8 +187,9 @@
                           
                           <td>
                             
-                            <a class="btn btn-danger" onclick="return confirm('Yakin Hapus')" href="/user/hapus/<%= u.id %>">Hapus</a>
-                            <!-- <button type="button" id="hapusUserid" class="btn btn-success" onclick="myFunction()" value="<%= u.id %>" data-toggle="modal" data-target="#modal-danger">Hapus</button> -->
+                            <!-- <a class="btn btn-danger" onclick="return confirm('Yakin Hapus')" href="/user/hapus/<%= u.id %>">Hapus</a> -->
+                            <!-- <a class="btn btn-danger" onclick="return myFunction('<%= u.id %>')">Hapus</a> -->
+                            <button type="button" id="hapusUserid" class="btn btn-success"  onclick="return myFunction('<%= u.id %>')" value="<%= u.id %>" data-toggle="modal" data-target="#modal-danger">Hapus</button>
 
                             <a class="btn btn-primary" href="/user/edit/<%= u.id %>">Edit</a>
                             <a class="btn btn-warning" href="/user/blokir/<%= u.id %>">Ubah Status</a>
@@ -222,13 +223,13 @@
 
                               //   hapus.setAttribute('href', `/user/hapus/${idUserHapus.value}`)
                               // })
-                            function myFunction() {
+                            function myFunction(urlnya) {
                               // alert("hapus data !");
-                            
-
-                              const idUser = document.getElementById('hapusUserid')
+                        
+                              // const idUser = document.getElementById('hapusUserid')
                               const hapus = document.getElementById('hapusUser')
-                              hapus.setAttribute('href', `/user/hapus/${this.value}`)
+                              // hapus.setAttribute('modal', 'show')
+                              hapus.setAttribute('href', `/user/hapus/${urlnya}`)
                               // idUser.addEventListener('onclick', () => {
                               //   hapus.setAttribute('href', `/user/hapus/${idUser.value}`)
                               // })
