@@ -18,7 +18,8 @@ module.exports = {
                     return
                 
                 } 
-                resp.send('anda bukan admin silahkan <a href="/" >kembali</a>')
+                // resp.send('anda bukan admin silahkan <a href="/" >kembali</a>')
+                resp.render('halaman_error/verif_admin.ejs')
                 return
             } 
             ) 

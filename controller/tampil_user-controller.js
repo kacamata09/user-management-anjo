@@ -5,8 +5,9 @@ module.exports = {
         const ambilData = 'select * from pengguna'
         koneksi.query(ambilData, (err, rows, field)=> {
             if (err) throw err
-            const konfir = requ.flash('password')
-            resp.render('tampil_user.ejs', {konfir, users:rows})
+            // const konfir = requ.flash('password')
+            const pesan = requ.flash('email')
+            resp.render('tampil_user.ejs', {pesan, users:rows})
           
         })
     },

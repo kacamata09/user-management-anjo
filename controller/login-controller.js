@@ -1,4 +1,5 @@
 const koneksi = require('../config/database')
+const bcrypt = require('bcrypt')
 
 module.exports = {
     tampilloginUser(requ, resp) {
@@ -13,7 +14,7 @@ module.exports = {
     },
     login_user(requ, resp) {
         const getData = requ.body
-        const cariUser = 'select * from pengguna where email = ? and password = SHA2(?,512)'
+        const cariUser = 'select * from pengguna where email = ?'
         if (getData.ingat === '1') {
             koneksi.query('insert into session values(?)', getData.email, (err, rows, field) => {
                 resp.cookie('email', getData.email)
@@ -21,8 +22,8 @@ module.exports = {
 
         }
         console.log(requ.cookies.email)
-        console.log(getData.ingat)
-        koneksi.query(cariUser, [getData.email, getData.password], (err, rows, field) => {
+        // console.log(getData.ingat)
+        koneksi.query(cariUser, [getData.email], async (err, rows, field) => {
             if (err) throw err
             if (rows.length > 0) {
 
@@ -31,18 +32,27 @@ module.exports = {
                     resp.redirect('/login')
                     return
                 }
-                
-                requ.session.loggedin = true;
-                requ.session.userid = rows[0].id;
-                requ.session.username = rows[0].nama;
-                if (rows[0].role == 'admin') {
-                    resp.redirect('/admin')
-                    return
+                const passwordVerif = await bcrypt.compare(getData.password, rows[0].password)
+                console.log(passwordVerif)
+                if (!passwordVerif) {
+                    requ.flash('login', 'password anda salah')
+                    resp.redirect('/login')
+                } else {
+                    requ.session.loggedin = true;
+                    requ.session.userid = rows[0].id;
+                    requ.session.username = rows[0].nama;
+                    if (rows[0].role == 'admin') {
+                        resp.redirect('/admin')
+                        return
+                    } else {
+                        resp.redirect('/')
+                        return
+                    }
                 }
-                resp.redirect('/')
-                return
+               
+
             } else {
-                requ.flash('login', 'Password atau email yang anda masukkan salah')
+                requ.flash('login', 'Email yang anda masukkan salah')
                 // resp.send('password atau email yang anda masukkan salah')
                 resp.redirect('/login')
                 return
@@ -81,7 +91,8 @@ module.exports = {
     logout(requ, resp) {
         // requ.flash('login', 'Selamat anda telah berhasil logout')
         const email = requ.cookies.email
-        koneksi.query('delete from session where email = ?', email)
+        koneksi.query('delete from session where email = ?', email, (err, rows, field) => {})
+        resp.cookie('email', undefined)
         requ.session.destroy(function(err) {
             // resp.send('selamat anda berhasil logout, silahkan login <a href="/login">Login</a>')
         })
