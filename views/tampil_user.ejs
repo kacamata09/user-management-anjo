@@ -82,14 +82,7 @@
         <!-- Sidebar -->
         <div class="sidebar">
           <!-- Sidebar user panel (optional) -->
-          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-              <img src="/dasboars/AdminLTE-3.2.0/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-            </div>
-            <div class="info">
-              <a href="#" class="d-block">Alexander Pierce</a>
-            </div>
-          </div>
+       
     
           <!-- SidebarSearch Form -->
           <div class="form-inline">
@@ -191,7 +184,7 @@
                             <!-- <a class="btn btn-danger" onclick="return fungsiUbahLink('<%= u.id %>')">Hapus</a> -->
                             <button type="button" id="hapusUserid" class="btn btn-danger"  onclick="return fungsiUbahLink('<%= u.id %>', '<%= u.nama %>')" data-toggle="modal" data-target="#modal-danger">Hapus</button>
 
-                            <a class="btn btn-primary" href="/user/edit/<%= u.id %>">sEdit</a>
+                            <a class="btn btn-primary" href="/user/edit/<%= u.id %>">Edit</a>
                             <a class="btn btn-warning" href="/user/blokir/<%= u.id %>">Ubah Status</a>
                   
                 <div class="modal fade" id="modal-danger">
@@ -384,13 +377,7 @@
       </div>
     
       <!-- /.content-wrapper -->
-      <footer class="main-footer">
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-        All rights reserved.
-        <div class="float-right d-none d-sm-inline-block">
-          <b>Version</b> 3.2.0
-        </div>
-      </footer>
+    
     
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-dark">
