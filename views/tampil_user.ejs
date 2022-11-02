@@ -188,10 +188,10 @@
                           <td>
                             
                             <!-- <a class="btn btn-danger" onclick="return confirm('Yakin Hapus')" href="/user/hapus/<%= u.id %>">Hapus</a> -->
-                            <!-- <a class="btn btn-danger" onclick="return myFunction('<%= u.id %>')">Hapus</a> -->
-                            <button type="button" id="hapusUserid" class="btn btn-danger"  onclick="return myFunction('<%= u.id %>', '<%= u.nama %>')" data-toggle="modal" data-target="#modal-danger">Hapus</button>
+                            <!-- <a class="btn btn-danger" onclick="return fungsiUbahLink('<%= u.id %>')">Hapus</a> -->
+                            <button type="button" id="hapusUserid" class="btn btn-danger"  onclick="return fungsiUbahLink('<%= u.id %>', '<%= u.nama %>')" data-toggle="modal" data-target="#modal-danger">Hapus</button>
 
-                            <a class="btn btn-primary" href="/user/edit/<%= u.id %>">Edit</a>
+                            <a class="btn btn-primary" href="/user/edit/<%= u.id %>">sEdit</a>
                             <a class="btn btn-warning" href="/user/blokir/<%= u.id %>">Ubah Status</a>
                   
                 <div class="modal fade" id="modal-danger">
@@ -205,7 +205,6 @@
                       </div>
                       <div class="modal-body">
                         <p id="pesan"></p>
-
                         <a  class="btn btn-danger" id="hapusUser">DELETE</a>
                       </div>
                     </div>
@@ -223,7 +222,7 @@
 
                               //   hapus.setAttribute('href', `/user/hapus/${idUserHapus.value}`)
                               // })
-                            function myFunction(idnya, namanya) {
+                            function fungsiUbahLink(idnya, namanya) {
                               // alert("hapus data !");
                         
                               // const idUser = document.getElementById('hapusUserid')

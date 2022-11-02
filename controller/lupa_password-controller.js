@@ -2,6 +2,8 @@ const koneksi = require('../config/database')
 const jwt = require('jsonwebtoken')
 const nodemailer = require("nodemailer");
 const PASSW = 'ifnahgglwaoqhmck'
+const bcrypt = require('bcrypt')
+
 let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -53,18 +55,19 @@ Reset Password = localhost:3000/cekkode/${kodeReset}`
 
     },
     ubahPassword(requ, resp) {
-        const ubahPassword = 'update pengguna set password = SHA2(?, 512) where email = ?'
+        const ubahPassword = 'update pengguna set password = ? where email = ?'
         const cekEmail = 'select * from cek_email'
         const password_baru = requ.body.passwordbaru
         const konfirmasi_password = requ.body.konfirpassword
         const hapusEmail = 'delete from cek_email where email = ?'
 
-        koneksi.query(cekEmail, (err, rows, field) => {
+        koneksi.query(cekEmail, async (err, rows, field) => {
             if (err) throw err
             if (rows.length > 0) {
                 const email = rows[0].email
                 console.log(email)
                 if (password_baru == konfirmasi_password) {
+                    const hashPasswordBaru = await bcrypt
                     koneksi.query(ubahPassword, [password_baru, email], (err, rows, field) => {
                         if (err) throw err
                         koneksi.query(hapusEmail, email)

@@ -1,33 +1,35 @@
 const koneksi = require("../config/database")
+const bcrypt = require('bcrypt')
 
 module.exports = {
     tampil(requ, resp) {
-        const pesan = requ.flash('ubah')
-        resp.render('ubah_password.ejs', {pesan})
+        const pesan = requ.flash('salah')
+        const sukses = requ.flash('sukses')
+        resp.render('ubah_password.ejs', {pesan, sukses})
     },
     ubah(requ, resp) {
-        const ambilUser = 'select * from pengguna where id = ?'
-        const cekPassword = 'select * from pengguna where id = ? and password = SHA2(?, 512)'
+        const cekUser = 'select * from pengguna where id = ?'
         const ambilId = requ.session.userid
         const ambilPassword = requ.body
-        const editPassword = 'update pengguna set password = SHA2(?, 512) where id = ?'
-
+        const editPassword = 'update pengguna set password = ? where id = ?'
         // koneksi.query(ambilUser, ambilId, (err, rows, field) => {
         //     if (err) throw err
-            koneksi.query(cekPassword, [ambilId, ambilPassword.password_lama], (err, rows, field) => {
+            koneksi.query(cekUser, ambilId, async (err, rows, field) => {
                 if (err) throw err
+                const hashPasswordBaru = await bcrypt.hash(ambilPassword.password_baru, 10)
+                const passwordHashLama = await bcrypt.compare(ambilPassword.password_lama, rows[0].password)
 
-                if (rows.length > 0) {
-                    koneksi.query(editPassword, [ambilPassword.password_baru, ambilId], (err, rows, field) => {
+                if (passwordHashLama) {
+                    koneksi.query(editPassword, [hashPasswordBaru, ambilId], (err, rows, field) => {
                         if (err) throw err
                         // resp.send('selamat password anda berhasil diperbarui')
-                        requ.flash('ubah', 'selamat password anda sudah diperbarui')
+                        requ.flash('sukses', 'selamat password anda sudah diperbarui')
                         resp.redirect('/ubahpassword/:id')
                         return
                     })
                 } else {
                     // resp.send('password lama anda salah')
-                    requ.flash('ubah', 'Password lama yang anda masukkan salah')
+                    requ.flash('salah', 'Password lama yang anda masukkan salah')
                     resp.redirect('/ubahpassword/:id')
                     return
                 }
