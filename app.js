@@ -4,6 +4,9 @@ const session = require('express-session')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 
+// inisiasi library oidc provider
+const Provider = require('oidc-provider')
+
 // routes
 const adminRoute = require('./routes/hal_admin-router')
 const indexRoute = require('./routes/index-router')
@@ -43,6 +46,10 @@ app.use(express.static(path.join(__dirname, 'static')))
 // bodyParser
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
+
+// route khusus oidc
+// app.use()
+
 
 // inisiasi router
 app.use(adminRoute)
