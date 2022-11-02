@@ -1,7 +1,7 @@
 const koneksi = require('../config/database')
 const jwt = require('jsonwebtoken')
 const nodemailer = require("nodemailer");
-const PASSW = 'ifnahgglwaoqhmck'
+const PASSW = 'jikpueizzukeomba'
 const bcrypt = require('bcrypt')
 
 let transporter = nodemailer.createTransport({
@@ -28,9 +28,10 @@ module.exports = {
                 const linKReset = `<h2>Apakah anda membutuhkan token untuk reset password, jika benar anda yanng meminta token untuk reset. Dibawah ini adalah link reset password anda: </h2> <br> <br> Reset Password = <a href = "localhost:3000/cekkode/${kodeReset}">Ini link reset password anda</a>`
                 const pesanKode = `Apakah anda membutuhkan token untuk reset password, jika benar anda yanng meminta token untuk reset. Dibawah ini adalah link reset password anda:
 
-Reset Password = localhost:3000/cekkode/${kodeReset}`
+Reset Password = http://localhost:3000/cekkode/${kodeReset}`
 
-            requ.session.iniemail = true
+            // requ.session.iniemail = true
+            resp.cookie('iniemail', email, expiresIn=30000 )
             transporter.sendMail({
                 from: 'muh.ansharazhari@gmail.com', 
                 to: email,
@@ -67,8 +68,8 @@ Reset Password = localhost:3000/cekkode/${kodeReset}`
                 const email = rows[0].email
                 console.log(email)
                 if (password_baru == konfirmasi_password) {
-                    const hashPasswordBaru = await bcrypt
-                    koneksi.query(ubahPassword, [password_baru, email], (err, rows, field) => {
+                    const hashPasswordBaru = await bcrypt.hash(password_baru, 10)
+                    koneksi.query(ubahPassword, [hashPasswordBaru, email], (err, rows, field) => {
                         if (err) throw err
                         koneksi.query(hapusEmail, email)
                         requ.flash('login', 'Selamat password anda berhasil diubah')
@@ -78,7 +79,8 @@ Reset Password = localhost:3000/cekkode/${kodeReset}`
                     })
                 } else {
                     requ.flash('salah', 'Password baru dan konfirmasi password belum sejalan')
-                    resp.send('password baru dan konfirmasi password belum sejalan')
+                    // resp.send('password baru dan konfirmasi password belum sejalan')
+                    resp.redirect('/ubahpass')
                     return
                 }
             } else {
@@ -131,7 +133,8 @@ Reset Password = localhost:3000/cekkode/${kodeReset}`
         }
     },
     tampilUbahLupa(requ, resp) {
-        resp.render('ubah_lupapass')
+        salah = requ.flash('salah')
+        resp.render('ubah_lupapass', {salah})
     }
 }
 

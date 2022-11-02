@@ -1,7 +1,7 @@
 const koneksi = require('../config/database')
 module.exports = {
     isKirimEmail(requ, resp, next) {
-        if (requ.session.iniemail == true) {
+        if (requ.cookies.iniemail) {
             next()
             return
         }
@@ -10,7 +10,8 @@ module.exports = {
     },
     isMasukkanKode(requ, resp, next) {
         // requ.session.destroy()
-        const email = requ.session.iniemail
+        // const email = requ.session.iniemail
+        const email = requ.cookies.iniemail
         const cariEmail = 'select * from cek_email where email = ?'
         koneksi.query(cariEmail, email, (err, rows, field) => {
             if (err) throw err
