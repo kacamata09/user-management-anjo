@@ -1,4 +1,7 @@
 const koneksi = require('../config/database')
+// const Provider = require('oidc-provider')
+const controller = require('../controller/oidc-controller')
+const ambilClient = require('../controller/client-controller')
 
 function randomString(length) {
   var result           = '';
@@ -10,46 +13,29 @@ function randomString(length) {
   return result;
 }
 
-console.log(randomString(27))
+// console.log(randomString(27))
 
 module.exports = {
-  tampilDaftarClient(requ, resp) {
-    resp.render('')
+  async tampilDaftarClient(requ, resp) {
+    
+    resp.render('tampil_client.ejs')
   },
   tambahClient(requ, resp) {
 
     const tambahClient = 'insert into clientconfig values(?,?,?,?)'
+    const cariClient = 'select * from clientconfig where client_id = ?'
     const client_id = randomString(27)
     const client_secret = randomString(27)
     const client_nama = requ.body.client_name
     const redirect_uri = requ.body.redirect_uri
+    // koneksi.query()
     koneksi.query(tambahClient, [client_id, client_secret, client_nama, redirect_uri])
     resp.redirect('/client')
-    
-
-    
-  },
-  configClient(requ, resp) {
-    const oidc = new Provider('http://localhost:3000', configuration);
 
   }
+  
 
 
 }
-const configuration = {
- 
-    clients: [{
-       client_id: "oidcCLIENT",      
-       client_secret: "Some_super_secret",      
-       grant_types: ["authorization_code"],      
-      //  redirect_uris: [ "http://localhost:8080/auth/login/callback","https://oidcdebugger.com/debug"], 
-       redirect_uris: [ "http://localhost:8080/auth/login/callback"], 
-       response_types: ["code",],  
-         
-     //other configurations if needed
-    }],
-    pkce: {
-      required: () => false,
-    },
-  };
+
   
