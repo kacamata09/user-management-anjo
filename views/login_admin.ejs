@@ -1,104 +1,107 @@
-<%- include('snippets/head') %>
 
-<!--
-<div class="container-sm p-3">
-    <div class="row justify-content-center">
-        <div class="col-6">
+<% module.exports = {template: %>
+  <%- include('snippets/head') %>
 
-            <h3 class="text-center">Login Admin</h3>
-            <form action="/admin/login" method="POST">
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
-                  </div>
+  <!--
+  <div class="container-sm p-3">
+      <div class="row justify-content-center">
+          <div class="col-6">
+  
+              <h3 class="text-center">Login Admin</h3>
+              <form action="/admin/login" method="POST">
                   <div class="mb-3">
-                      <label for="password" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="password" name="password">
-                  </div>
-                
-                <div class="row">
-                    <div class="col-6">
-                        <a href="/lupapassword">Lupa Password</a>
+                      <label for="email" class="form-label">Email address</label>
+                      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
                     </div>
-                </div>  
-                <button type="submit" class="btn btn-dark">Login</button>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                  
+                  <div class="row">
+                      <div class="col-6">
+                          <a href="/lupapassword">Lupa Password</a>
+                      </div>
+                  </div>  
+                  <button type="submit" class="btn btn-dark">Login</button>
+              </form>
+          </div>
+      </div>
+  </div>
+  -->
+  
+  <head>
+    <title>Login Admin</title>
+  </head>
+  <body class="hold-transition login-page">
+    
+    <% pesan.forEach(p => { %>
+      <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+        <div>
+          <%= p %>
+        </div>
+      </div>
+      <% }) %>
+  
+      <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card card-outline card-primary">
+          <div class="card-header text-center">
+            <a href="#" class="h1"><b>Admin </b>Login</a>
+          </div>
+          <div class="card-body">
+            <p class="login-box-msg">Sign in to start your session</p>
+      
+            <form action="/admin/login" method="post">
+              <div class="input-group mb-3">
+                <input type="email" class="form-control" placeholder="email" id="email" name="email">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-envelope"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <input type="password" class="form-control" placeholder="Password" id="password" name="password">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-8">
+                  <div class="icheck-primary">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">
+                      Remember Me
+                    </label>
+                  </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-4">
+                  <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                </div>
+                <!-- /.col -->
+              </div>
             </form>
+      
+      
+            <!-- /.social-auth-links -->
+      
+            <p class="mb-1">
+              <a href="/lupapassword">I forgot my password</a>
+            </p>
+          </div>
+          <!-- /.card-body -->
         </div>
-    </div>
-</div>
--->
-
-<head>
-  <title>Login Admin</title>
-</head>
-<body class="hold-transition login-page">
-  
-  <% pesan.forEach(p => { %>
-    <div class="alert alert-danger d-flex align-items-center" role="alert">
-      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-      <div>
-        <%= p %>
+        <!-- /.card -->
       </div>
-    </div>
-    <% }) %>
-
-    <div class="login-box">
-      <!-- /.login-logo -->
-      <div class="card card-outline card-primary">
-        <div class="card-header text-center">
-          <a href="#" class="h1"><b>Admin </b>Login</a>
-        </div>
-        <div class="card-body">
-          <p class="login-box-msg">Sign in to start your session</p>
-    
-          <form action="/admin/login" method="post">
-            <div class="input-group mb-3">
-              <input type="email" class="form-control" placeholder="email" id="email" name="email">
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-envelope"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="password" class="form-control" placeholder="Password" id="password" name="password">
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-lock"></span>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-8">
-                <div class="icheck-primary">
-                  <input type="checkbox" id="remember">
-                  <label for="remember">
-                    Remember Me
-                  </label>
-                </div>
-              </div>
-              <!-- /.col -->
-              <div class="col-4">
-                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-              </div>
-              <!-- /.col -->
-            </div>
-          </form>
-    
-    
-          <!-- /.social-auth-links -->
-    
-          <p class="mb-1">
-            <a href="/lupapassword">I forgot my password</a>
-          </p>
-        </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->
-    </div>
-    <!-- /.login-box -->
+      <!-- /.login-box -->
+      
     
   
-
-<%- include('snippets/footer') %>
-    
+  <%- include('snippets/footer') %>
+      
+<% } %>

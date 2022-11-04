@@ -4,7 +4,7 @@ const controllerUbahPassword = require('../controller/ubah_password-controller')
 
 const ubahPasswordRouter = express.Router()
 
-ubahPasswordRouter.route('/ubahpassword/:id')
+ubahPasswordRouter.route('/ubahpassword/')
     .get(midwareVerifLogin.isLogin, controllerUbahPassword.tampil)
     .post(midwareVerifLogin.isLogin, controllerUbahPassword.ubah)
 

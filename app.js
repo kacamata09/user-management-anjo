@@ -81,6 +81,10 @@ app.get('/cobahapus', (requ, resp) => {
     resp.render('hapus.ejs')
 })
 
+app.get('/oidc/interactions/:uid', (requ, resp) => {
+    resp.render('login_user.ejs')
+})
+
 koneksi.query('select * from clientconfig', (err, rows, field) => {
         const listCl = []
         rows.forEach(cli => {

@@ -24,13 +24,13 @@ module.exports = {
                         if (err) throw err
                         // resp.send('selamat password anda berhasil diperbarui')
                         requ.flash('sukses', 'selamat password anda sudah diperbarui')
-                        resp.redirect('/ubahpassword/:id')
+                        resp.redirect('/ubahpassword/')
                         return
                     })
                 } else {
                     // resp.send('password lama anda salah')
                     requ.flash('salah', 'Password lama yang anda masukkan salah')
-                    resp.redirect('/ubahpassword/:id')
+                    resp.redirect('/ubahpassword/')
                     return
                 }
 
