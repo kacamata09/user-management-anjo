@@ -20,6 +20,7 @@
     "express-mailer": "^0.3.1",
     "express-session": "^1.17.3",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "mysql": "^2.18.1",
     "nodemailer": "^6.8.0",
     "oidc-provider": "^7.13.0"

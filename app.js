@@ -81,10 +81,8 @@ app.get('/cobahapus', (requ, resp) => {
     resp.render('hapus.ejs')
 })
 
-app.get('/oidc/interactions/:uid', (requ, resp) => {
-    resp.render('login_user.ejs')
-})
 
+// oidc 
 koneksi.query('select * from clientconfig', (err, rows, field) => {
         const listCl = []
         rows.forEach(cli => {
@@ -106,6 +104,20 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
         }, 
         })
 
+        // 
+        
+        app.post('/interaction/:uid', async (req, res) => {
+            const redirectTo = await oidc.interactionResult(req, res, result);
+            
+            res.redirect(redirectTo)
+          });
+        
+
+        app.get('/interaction/:uid', (requ, resp) => {
+            const pesan = requ.flash('pesan')
+            resp.render('login_user.ejs', {pesan})
+        })
+        
         app.use('/oidc', oidc.callback())
 
     })
