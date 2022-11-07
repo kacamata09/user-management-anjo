@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 const koneksi = require('./config/database')
 
 
+
 // inisiasi library oidc provider
 const Provider = require('oidc-provider')
 
@@ -20,6 +21,8 @@ const tampiUserRoute = require('./routes/tampil_user-router')
 const ubahPasswordRoute = require('./routes/ubah_password-router')
 const lupaPasswordRoute = require('./routes/lupa_password-routes')
 const daftarClientRoute = require('./routes/daftarClient-routes')
+// route oidc
+const route_oidc = require('./routes/express')
 
 // inisiasi flash
 const flash = require('connect-flash')
@@ -101,22 +104,27 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
         const oidc = new Provider('http://localhost:3000', {clients: listCl,
         pkce: {
         required: () => false,
-        }, 
+        }, features : {
+            devInteractions: {
+                enabled : false}
+        }
         })
 
         // 
         
-        app.post('/interaction/:uid', async (req, res) => {
-            const redirectTo = await oidc.interactionResult(req, res, result);
+        route_oidc(app, oidc)
+        // app.post('/interaction/:uid', async (req, res) => {
+        //     const redirectTo = await oidc.interactionResult(req, res, result);
             
-            res.redirect(redirectTo)
-          });
+        //     res.redirect(redirectTo)
+        //   });
         
 
-        app.get('/interaction/:uid', (requ, resp) => {
-            const pesan = requ.flash('pesan')
-            resp.render('login_user.ejs', {pesan})
-        })
+        // app.get('/interaction/:uid', (requ, resp) => {
+        //     const pesan = requ.flash('pesan')
+        //     koneksi.query('select * from ')
+        //     resp.render('login_user.ejs', {pesan})
+        // })
         
         app.use('/oidc', oidc.callback())
 
