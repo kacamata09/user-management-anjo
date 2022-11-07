@@ -9,8 +9,8 @@
 <body>
     
 
+    <form action="" method="post">
     <table>
-        <form action="" method="post">
             <tr>
                 <td>Nama Client</td>
                 <td><input type="text" name="client_name"></td>
@@ -19,9 +19,34 @@
                 <td>Redirect URI Client</td>
                 <td><input type="text" name="redirect_uri"></td>
             </tr>
-            <button type="submit">Simpan</button>
-        </form>
-     
+            
+        </table>
+        <button type="submit">Simpan</button>
+    </form>
+    <br>
+    <br>
+    <br>
+
+    <table border="2"> 
+        <tr>
+            <td>Nama Client</td>
+            <td>Client ID</td>
+            <td>Client Secret</td>
+            <td>Redirect URI</td>
+            <td>Aksi</td>
+        </tr>
+        <% clients.forEach(c => { %>
+            <tr>
+                <td><%= c.nama_client %></td>
+                <td><%= c.client_id %></td>
+                <td><%= c.client_secret %></td>
+                <td><%= c.redirect_uri %></td>
+                <td>
+                    <a href="/client/edit/<%= c.client_id %>">Edit</a>
+                    <a href="/client/hapus/<%= c.client_id %>">Hapus</a>
+                </td>
+            </tr>
+        <% }) %>
     </table>
 </body>
 </html>
