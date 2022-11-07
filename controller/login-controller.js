@@ -47,7 +47,9 @@ module.exports = {
                         if (rows.length > 0) {
                             const dataUser = user
                             const token = jwt.sign(dataUser, rows[0].client_secret, {algorithm:'HS256'})
-                            resp.redirect(`/token?data_user=${token}&client_id=${client_id}`)
+                            requ.session.idToken = token
+                            resp.redirect(rows[0].redirect_uri)
+                            // resp.redirect(`/token?data_user=${token}&client_id=${client_id}`)
                             return
                         } else {
 

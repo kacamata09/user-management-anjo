@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const path = require('path')
 const cookieParser = require('cookie-parser')
+const jwt = require('jsonwebtoken')
 
 // routes
 const adminRoute = require('./routes/hal_admin-router')
@@ -89,7 +90,10 @@ app.get('/auth/', (requ, resp) => {
 
 app.get('/token', (requ, resp) => {
     const client_id = requ.query.client_id
+    const token = requ.query.token
     koneksi.query('select * from clientconfig where client_id = ?', client_id, (err, rows, field)=>{
+        const isiToken = jwt.verify(token, rows[0].client_secret, {algorithms:['HS256']})
+        requ.session.tokenId = isiToken
         
     })
 })
