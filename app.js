@@ -17,6 +17,7 @@ const lupaPasswordRoute = require('./routes/lupa_password-routes')
 
 // inisiasi flash
 const flash = require('connect-flash')
+const koneksi = require('./config/database')
 
 
 // inisiasi aplikasi
@@ -70,7 +71,28 @@ app.get('/cobahapus', (requ, resp) => {
     resp.render('hapus.ejs')
 })
 
+// coba sso berbasis jwt 
+app.get('/auth/', (requ, resp) => {
+    const token = requ.query.token
+    const client_id = token.client_id
+    const redirect_uri = token.redirect_uri
+    koneksi.query('select * from clientconfig where client_id = ? and redirect_uri = ?', [client_id, redirect_uri], (err, rows, field) => {
+        if (err) throw err
 
+        if(rows.length > 0) {
+            resp.redirect(`/login?client_id=${client_id}`)
+            return
+        }
+
+    })
+})
+
+app.get('/token', (requ, resp) => {
+    const client_id = requ.query.client_id
+    koneksi.query('select * from clientconfig where client_id = ?', client_id, (err, rows, field)=>{
+        
+    })
+})
 
 
 

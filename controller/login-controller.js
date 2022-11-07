@@ -1,5 +1,6 @@
 const koneksi = require('../config/database')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 module.exports = {
     tampilloginUser(requ, resp) {
@@ -38,6 +39,18 @@ module.exports = {
                     requ.flash('login', 'password anda salah')
                     resp.redirect('/login')
                 } else {
+                    const client_id = requ.query.client_id
+                    const user = rows[0]
+                    koneksi.query('select * from clientconfig where client_id = ?', client_id, (err, rows, field) => {
+                        if (err) throw err
+
+                        if (rows.length > 0) {
+                            const dataUser = user
+                            const token = jwt.sign(dataUser, rows[0].client_secret, {algorithm:'HS256'})
+                            resp.redirect(`/token?data_user=${token}&client_id=${client_id}`)
+                            return
+                        } else {
+
                     requ.session.loggedin = true;
                     requ.session.userid = rows[0].id;
                     requ.session.username = rows[0].nama;
@@ -48,6 +61,10 @@ module.exports = {
                         resp.redirect('/')
                         return
                     }
+                        }
+                    })
+
+                    
                 }
                
 
