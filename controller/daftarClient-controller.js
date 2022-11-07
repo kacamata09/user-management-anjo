@@ -22,6 +22,7 @@ module.exports = {
   },
   tambahClient(requ, resp) {
 
+    // tambahin validasi 
     const tambahClient = 'insert into clientconfig values(?,?,?,?)'
     const cariClient = 'select * from clientconfig where client_id = ?'
     const client_id = randomString(27)
@@ -32,6 +33,12 @@ module.exports = {
     koneksi.query(tambahClient, [client_id, client_secret, client_nama, redirect_uri])
     resp.redirect('/client')
 
+  },
+  editClient(requ, resp) {
+    const client_id = requ.params.client_id
+    const namaApp = requ.body.namaApp
+    const redirect_uri = requ.body.redirect_uri
+    koneksi.query('update clientconfig ')
   }
   
 
