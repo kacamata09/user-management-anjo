@@ -5,8 +5,8 @@ dibuat oleh Anshar, Johan
 
 akun admin: 
 email : admin@admin.com
-password : 123
+password : 12345678
 
 akun user
 email : user@user.com
-password : 12
+password : 12345678
