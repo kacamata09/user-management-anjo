@@ -324,11 +324,8 @@
                                 <label for="nama">Nama Clients</label>
                                   <input type="text" class="form-control" id="client_name" name="client_name" placeholder="masukan nama Client" required>
                                 
-                                 <label for="redirect_uri">Redirect URI Client</label>
-                                  <input type="text" class="form-control" id="redirect_uri" name="redirect_uri" placeholder="redirect_uri" required>
-
-                                 <label for="logo_aplikasi">Logo App</label>
-                                  <input type="file" class="form-control" id="logo_aplikasi" name="logo_aplikasi" placeholder="Logo App" required>
+                                  <label for="role">Redirect URI Client</label>
+                                  <input type="text" class="form-control" id="redirect_uri" name="redirect_uri"  pattern="https?://.+" title="Include http://" placeholder="redirect_uri" required>
                       </div>
                       <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
