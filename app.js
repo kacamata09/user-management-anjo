@@ -5,7 +5,8 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const koneksi = require('./config/database')
 
-
+// koneksi database sequelize
+const dbku = require('./config/databasesequelize')
 
 // inisiasi library oidc provider
 const Provider = require('oidc-provider')
@@ -22,7 +23,7 @@ const ubahPasswordRoute = require('./routes/ubah_password-router')
 const lupaPasswordRoute = require('./routes/lupa_password-routes')
 const daftarClientRoute = require('./routes/daftarClient-routes')
 // route oidc
-const route_oidc = require('./routes/express')
+const route_oidc = require('./routes/loginOpenid')
 
 // inisiasi flash
 const flash = require('connect-flash')
@@ -55,6 +56,8 @@ app.use(bodyParser.urlencoded({extended:true}))
 
 // route khusus oidc
 // app.use()
+
+
 
 
 // inisiasi router
@@ -132,8 +135,13 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
 
 
 
+// koneksi db
+const tersambung = async () => {
+    await dbku.authenticate()
+    console.log('mysql versi sequelize berjalan....')
+}
 
-
+tersambung()
 
 const PORT = 3000
 const display = `SERVER INI BERJALAN DI PORT : ${PORT}`

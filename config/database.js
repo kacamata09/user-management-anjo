@@ -11,4 +11,6 @@ koneksi.connect((err)=>{
     console.log('mysql sedang berjalan...')
 })
 
+
+
 module.exports = koneksi
