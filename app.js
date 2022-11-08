@@ -4,6 +4,7 @@ const session = require('express-session')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const koneksi = require('./config/database')
+const multer = require('multer')
 
 // koneksi database sequelize
 const dbku = require('./config/databasesequelize')
@@ -31,6 +32,21 @@ const flash = require('connect-flash')
 
 // inisiasi aplikasi
 const app = express()
+
+
+// multer 
+const penyimpanan = multer.diskStorage({
+    destination: (requ, file, cb) => {
+        cb(null, './static/logo_client')
+    },
+    filename: (requ, file, cb) => {
+        cb(null, file.originalname)
+    },
+
+})
+const upload = multer({storage:penyimpanan})
+
+
 
 // session
 app.use(session({
@@ -88,6 +104,19 @@ app.get('/cobahapus', (requ, resp) => {
 })
 
 
+
+// coba multer
+app.get('/cobagambar', (requ, resp) => {
+    resp.render('cobagambar.ejs')
+})
+
+app.post('/cobagambar', upload.single('gambar'), (requ, resp) => {
+    console.log(requ.file)
+    console.log(requ.file.path)
+    resp.send('gambar tersimpan')
+})
+
+
 // oidc 
 koneksi.query('select * from clientconfig', (err, rows, field) => {
         const listCl = []
@@ -116,18 +145,6 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
         // 
         
         route_oidc(app, oidc)
-        // app.post('/interaction/:uid', async (req, res) => {
-        //     const redirectTo = await oidc.interactionResult(req, res, result);
-            
-        //     res.redirect(redirectTo)
-        //   });
-        
-
-        // app.get('/interaction/:uid', (requ, resp) => {
-        //     const pesan = requ.flash('pesan')
-        //     koneksi.query('select * from ')
-        //     resp.render('login_user.ejs', {pesan})
-        // })
         
         app.use('/oidc', oidc.callback())
 

@@ -31,14 +31,18 @@ module.exports = {
   tambahClient(requ, resp) {
 
     // tambahin validasi 
-    const tambahClient = 'insert into clientconfig values(?,?,?,?)'
+    const tambahClient = 'insert into clientconfig values(?,?,?,?,?)'
     const cariClient = 'select * from clientconfig where client_id = ?'
     const client_id = randomString(27)
     const client_secret = randomString(27)
     const client_nama = requ.body.client_name
     const redirect_uri = requ.body.redirect_uri
+    const logo = requ.file.originalname
+    console.log(requ.file)
+
+    // console.log(requ.body.logo_aplikasi)
     // koneksi.query()
-    koneksi.query(tambahClient, [client_id, client_secret, client_nama, redirect_uri])
+    koneksi.query(tambahClient, [client_id, client_secret, client_nama, redirect_uri, logo])
     resp.redirect('/client')
 
   },

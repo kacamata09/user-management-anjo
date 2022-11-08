@@ -93,17 +93,23 @@ module.exports = (app, provider) => {
     try {
       const { prompt: { name } } = await provider.interactionDetails(requ, resp);
       assert.equal(name, 'login');
-      const account = await Account.findByLogin(requ.body.login);
-      // const account = await cariAkun.cariUser(requ.body.login, requ.body.password)
+      // const account = await Account.findByLogin(requ.body.login);
+      const account = await cariAkun.cariUser(requ.body.login, requ.body.password)
       
-
-      const result = {
-        login: {
-          accountId: account.id,
-        },
-      };
-
-      await provider.interactionFinished(requ, resp, result, { mergeWithLastSubmission: false });
+      console.log(account.pesan)
+      
+      if (account.pesan != undefined) {
+        resp.send(account.pesan)
+      } else {
+        const result = {
+          login: {
+            accountId: account.email,
+          },
+        };
+  
+        await provider.interactionFinished(requ, resp, result, { mergeWithLastSubmission: false });
+      }
+   
     } catch (err) {
       next(err);
     }

@@ -184,6 +184,7 @@
                         <th>Client Secret</th>
                         <th>Redirect URI</th>
                         <th>Aksi</th>
+                        <th>Logo</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -196,6 +197,9 @@
                                 <td>
                                     <a class="btn btn-primary" href="/client/edit/<%= c.client_id %>">Edit</a>
                                     <button type="button" id="hapusUserid" class="btn btn-danger"  onclick="return fungsiUbahLink('<%= c.client_id %>', '<%= c.nama_client %>')" data-toggle="modal" data-target="#modal-danger">Hapus</button>
+                                </td>
+                                <td>
+                                  <img src="/logo_client/<%= c.logo_app %>" alt="">
                                 </td>
                             </tr>
                 <div class="modal fade" id="modal-danger">
@@ -316,12 +320,15 @@
                         
                           <div class="card-body">
                             <div class="form-group">
-                              <form action="" method="POST">
+                              <form action="" method="POST" enctype="multipart/form-data">
                                 <label for="nama">Nama Clients</label>
-                                     <input type="text" class="form-control" id="client_name" name="client_name" placeholder="masukan nama Client" required>
+                                  <input type="text" class="form-control" id="client_name" name="client_name" placeholder="masukan nama Client" required>
                                 
-                                 <label for="role">Redirect URI Client</label>
+                                 <label for="redirect_uri">Redirect URI Client</label>
                                   <input type="text" class="form-control" id="redirect_uri" name="redirect_uri" placeholder="redirect_uri" required>
+
+                                 <label for="logo_aplikasi">Logo App</label>
+                                  <input type="file" class="form-control" id="logo_aplikasi" name="logo_aplikasi" placeholder="Logo App" required>
                       </div>
                       <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -1,5 +1,6 @@
 const koneksi = require('../config/database')
 const bcrypt = require('bcrypt')
+const { reject } = require('lodash')
 
 
 module.exports = {
@@ -23,26 +24,32 @@ module.exports = {
                             // requ.flash('login', 'Akun anda di blokir, silahkan hubungi admin mengapa akun anda di blokir, apakah kamu ada salah ke dia')
                             // // resp.redirect('/login')
                             // resp.send('akun anda diblokir')
-                            return 
+                            // reject({pesan: 'anda di blokir'})
+                            resolve({pesan: 'anda di blokir'})
+                            // return 
                         }
                         const passwordVerif = await bcrypt.compare(password, rows[0].password)
                         console.log(passwordVerif)
                         if (!passwordVerif) {
                             // requ.flash('login', 'password anda salah')
                             // // resp.redirect('/login')
+                            // reject({pesan:'password anda salah'})
+                            resolve({pesan:'password anda salah'})
+                            // return
                             // resp.send('password anda salah')
                         } else {
                             // requ.session.loggedin = true;
                             // requ.session.userid = rows[0].id;
                             // requ.session.username = rows[0].nama;
-                            if (rows[0].role == 'admin') {
-                                // resp.redirect('/admin')
-                                resolve(rows[0])
-                                return
-                            } else {
-                                // resp.redirect('/')
-                                return
-                            }
+                            // if (rows[0].role == 'admin') {
+                            //     // resp.redirect('/admin')
+                            //     resolve(rows[0])
+                            //     return
+                            // } else {
+                            //     // resp.redirect('/')
+                            //     return
+                            // }
+                            resolve(rows[0])
                         }
                        
         
@@ -51,8 +58,8 @@ module.exports = {
                         // resp.send('password atau email yang anda masukkan salah')
                         // resp.redirect('/login')
                         // resp.send('email anda salah')
-                        reject('email anda salah')
-                        return
+                        resolve({pesan:'email anda salah'})
+                        // return
                     }
                 })
             })
@@ -64,6 +71,7 @@ module.exports = {
         })
         .catch(function(err){
           console.log("Promise rejection error: "+err);
+        // reject(err)
         })
         return hasil
 
