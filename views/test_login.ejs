@@ -1,5 +1,5 @@
 <head>
-  <title>Login User</title>
+  <title>Login Menggunakan SSO</title>
 </head>
 <body class="hold-transition login-page">
 
@@ -22,7 +22,7 @@
       <!-- /.login-logo -->
       <div class="card card-outline card-primary">
         <div class="card-header text-center">
-          <a href="#" class="h1"><b>User </b>Login</a>
+          <a href="#" class="h1"><b>Login </b>by SSO</a>
         </div>
         <div class="card-body">
           <p class="login-box-msg">Masukkan Email dan Password</p>
@@ -47,16 +47,30 @@
             <div class="row">
               
               <!-- /.col -->
-              <div class="col-4">
+              <div class="col-12">
                 <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                
               </div>
+            
               <!-- /.col -->
             </div>
+
+            <div class="row m-2">
+              <div class="col-12">
+                <a class="btn btn-danger btn-block" href="/interaction/<%= uid %>/abort">Batal</a>
+                <% if (client.tosUri) { %>
+                  <a href="<%= client.tosUri %>">[ Terms of Service ]</a>
+                <% } %>
+                <% if (client.policyUri) { %>
+                  <a href="<%= client.policyUri %>">[ Privacy Policy ]</a>
+                <% } %>
+              </div>
+             </div>
           </form>
     
     
           <!-- /.social-auth-links -->
-    
+  
           <p class="mb-1">
             <a href="/lupapassword">I forgot my password</a>
           </p>
