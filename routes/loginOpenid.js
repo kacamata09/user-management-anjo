@@ -43,7 +43,7 @@ module.exports = (app, provider) => {
     next();
   }
 
-  app.get('/interaction/:uid', setNoCache, async (req, res, next) => {
+  app.get('/interaction/:uid', async (req, res, next) => {
     try {
       const {
         uid, prompt, params, session,
@@ -59,16 +59,17 @@ module.exports = (app, provider) => {
             uid,
             details: prompt.details,
             params,
-            title: 'Sign-in',
+            title: 'Login menggunakan SSO',
             session: session ? debug(session) : undefined,
             dbg: {
               params: debug(params),
               prompt: debug(prompt),
             },
+
           });
         }
         case 'consent': {
-          return res.render('interaction', {
+          return res.render('interaction.ejs', {
             client,
             uid,
             details: prompt.details,
@@ -89,7 +90,7 @@ module.exports = (app, provider) => {
     }
   });
 
-  app.post('/interaction/:uid/login', setNoCache, body, async (requ, resp, next) => {
+  app.post('/interaction/:uid/login', body, async (requ, resp, next) => {
     try {
       const { prompt: { name } } = await provider.interactionDetails(requ, resp);
       assert.equal(name, 'login');
@@ -115,7 +116,7 @@ module.exports = (app, provider) => {
     }
   });
 
-  app.post('/interaction/:uid/confirm', setNoCache, body, async (req, res, next) => {
+  app.post('/interaction/:uid/confirm', body, async (req, res, next) => {
     try {
       const interactionDetails = await provider.interactionDetails(req, res);
       const { prompt: { name, details }, params, session: { accountId } } = interactionDetails;
@@ -163,7 +164,7 @@ module.exports = (app, provider) => {
     }
   });
 
-  app.get('/interaction/:uid/abort', setNoCache, async (req, res, next) => {
+  app.get('/interaction/:uid/abort', async (req, res, next) => {
     try {
       const result = {
         error: 'access_denied',

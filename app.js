@@ -142,8 +142,7 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
         }
         })
 
-        // 
-        
+        // rute oidc
         route_oidc(app, oidc)
         
         app.use('/oidc', oidc.callback())
