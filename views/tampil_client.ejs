@@ -199,7 +199,7 @@
                                     <button type="button" id="hapusUserid" class="btn btn-danger"  onclick="return fungsiUbahLink('<%= c.client_id %>', '<%= c.nama_client %>')" data-toggle="modal" data-target="#modal-danger">Hapus</button>
                                 </td>
                                 <td>
-                                  <img src="/logo_client/<%= c.logo_app %>" alt="">
+                                  <img src="/logo_client/<%= c.logo_app %>" alt="" height="200" width="200">
                                 </td>
                             </tr>
                 <div class="modal fade" id="modal-danger">
@@ -237,7 +237,7 @@
                               const hapus = document.getElementById('hapusUser')
                               const nama = document.getElementById('pesan')
                               // hapus.setAttribute('modal', 'show')
-                              nama.innerText = `apakah ada yakin menghapus data client yang bernama ${namanya}`
+                              nama.innerText = `apakah ada yakin menghapus data client yang bernama  ${namanya}`
                               hapus.setAttribute('href', `/client/hapus/${idnya}`)
 
                               // idUser.addEventListener('onclick', () => {
@@ -326,6 +326,8 @@
                                 
                                   <label for="redirect_uri">Redirect URI Client</label>
                                   <input type="text" class="form-control" id="redirect_uri" name="redirect_uri"  pattern="https?://.+" title="Include http://" placeholder="redirect_uri" required>
+                                  <label for="logo_aplikasi">Logo App</label>
+                                  <input type="file" class="form-control" id="logo_aplikasi" name="logo_aplikasi" placeholder="Logo App" required>
                       </div>
                       <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -351,9 +353,9 @@
             <!-- /.row -->
           </div>
           <!-- /.container-fluid -->
-        </section>
+       
         <!-- /.content -->
-      </div>
+     
     
       <!-- /.content-wrapper -->
     
@@ -365,7 +367,8 @@
       <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
-    
+     </section> 
+    </div>
 <%- include('snippets/foot') %>
 
     </body>
