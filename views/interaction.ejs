@@ -50,7 +50,58 @@
 
 </ul>
 
-<form autocomplete="off" action="/interaction/<%= uid %>/confirm" method="post">
+
+
+<head>
+  <title>Konfirmasi Lanjut</title>
+</head>
+<body class="hold-transition login-page">
+
+    <div class="login-box">
+      <!-- /.login-logo -->
+      <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+          <a href="#" class="h1"><b>Konfirmasi</b></a>
+        </div>
+        <div class="card-body">
+          <p class="login-box-msg">Apakah anda ingin lanjut?</p>
+    
+          <form autocomplete="off" action="/interaction/<%= uid %>/confirm" method="post">
+           
+         
+            <div class="row">
+              
+              <!-- /.col -->
+              <div class="col-12">
+                <button autofocus type="submit" class="btn btn-primary btn-block">Lanjut</button>
+                
+              </div>
+            
+              <!-- /.col -->
+            </div>
+
+            <div class="row m-2">
+              <div class="col-12">
+                <a class="btn btn-danger btn-block" href="/interaction/<%= uid %>/abort">Batal</a>
+                <% if (client.tosUri) { %>
+                  <a href="<%= client.tosUri %>">[ Terms of Service ]</a>
+                <% } %>
+                <% if (client.policyUri) { %>
+                  <a href="<%= client.policyUri %>">[ Privacy Policy ]</a>
+                <% } %>
+              </div>
+             </div>
+          </form>
+    
+    
+        
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.login-box -->
+    
   
-  <button autofocus type="submit" class="login login-submit">Continue</button>
-</form>
+
+    
