@@ -38,48 +38,42 @@ module.exports = (app, provider) => {
     next();
   });
 
-  function setNoCache(req, res, next) {
-    res.set('cache-control', 'no-store');
-    next();
-  }
+  
 
   app.get('/interaction/:uid', async (req, res, next) => {
     try {
       const {
         uid, prompt, params, session,
       } = await provider.interactionDetails(req, res);
-
+      
+      
       const client = await provider.Client.find(params.client_id);
+
       const pesan = req.flash('pesan')
       switch (prompt.name) {
         case 'login': {
+          
           return res.render('test_login.ejs', {
             pesan,
             client,
             uid,
             details: prompt.details,
             params,
-            title: 'Login menggunakan SSO',
-            session: session ? debug(session) : undefined,
-            dbg: {
-              params: debug(params),
-              prompt: debug(prompt),
-            },
+            // session: session ? debug(session) : undefined,
+           
 
           });
         }
         case 'consent': {
+          console.log(session)
           return res.render('interaction.ejs', {
             client,
+            akun_user: session.accountId,
             uid,
             details: prompt.details,
             params,
-            title: 'Authorize',
-            session: session ? debug(session) : undefined,
-            dbg: {
-              params: debug(params),
-              prompt: debug(prompt),
-            },
+            // session: session ? debug(session) : undefined,
+           
           });
         }
         default:
@@ -92,12 +86,12 @@ module.exports = (app, provider) => {
 
   app.post('/interaction/:uid/login', body, async (requ, resp, next) => {
     try {
-      const { prompt: { name } } = await provider.interactionDetails(requ, resp);
+      const { prompt: { name }, params } = await provider.interactionDetails(requ, resp);
       assert.equal(name, 'login');
       // const account = await Account.findByLogin(requ.body.login);
       const account = await cariAkun.cariUser(requ.body.login, requ.body.password)
-      
-      console.log(account.pesan)
+      console.log(params.client_id)
+      console.log(account)
       
       if (account.pesan != undefined) {
         resp.send(account.pesan)
@@ -119,9 +113,10 @@ module.exports = (app, provider) => {
   app.post('/interaction/:uid/confirm', body, async (req, res, next) => {
     try {
       const interactionDetails = await provider.interactionDetails(req, res);
+      console.log(interactionDetails)
       const { prompt: { name, details }, params, session: { accountId } } = interactionDetails;
       assert.equal(name, 'consent');
-
+      console.log(accountId)
       let { grantId } = interactionDetails;
       let grant;
 
@@ -176,9 +171,23 @@ module.exports = (app, provider) => {
     }
   });
 
+  app.get('/logoutopenid', async (requ, resp) => {
+    const interactionDetails = await provider.interactionDetails(requ, resp);
+    const {session } = interactionDetails
+    console.log(session)
+    // const result = {
+    //   login: {
+    //     accountId: false
+    //   },
+    // };
+
+    // await provider.interactionFinished(requ, resp, result, { mergeWithLastSubmission: false });
+  })
+
   app.use((err, req, res, next) => {
     if (err instanceof SessionNotFound) {
       // handle interaction expired / session not found error
+      return res.send('sesi tidak ditemukan')
     }
     next(err);
   });

@@ -122,12 +122,14 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
         const listCl = []
         rows.forEach(cli => {
             listCl.push({
+                client_name:cli.nama_client,
                 client_id: cli.client_id,      
                 client_secret: cli.client_secret,      
                 grant_types: ["authorization_code"],      
                //  redirect_uris: [ "http://localhost:8080/auth/login/callback","https://oidcdebugger.com/debug"], 
                 redirect_uris: [ cli.redirect_uri ], 
                 response_types: ["code",],  
+                logo_uri: `http://localhost:3000/logo_client/${cli.logo_app}`
                   
               //other configurations if needed
              }) 
@@ -136,12 +138,21 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
         const oidc = new Provider('http://localhost:3000', {clients: listCl,
         pkce: {
         required: () => false,
-        }, features : {
+        }, 
+        features : {
             devInteractions: {
-                enabled : false}
+                enabled : false},
+            jwtUserinfo : {
+                enabled: true
+            }
+        }, 
+        revokeGrantPolicy: function revokeGrantPolicy(ctx) {
+            return true;
+            
+              
         }
         })
-
+        
         // rute oidc
         route_oidc(app, oidc)
         

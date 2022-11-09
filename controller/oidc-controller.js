@@ -20,7 +20,7 @@ const listClient = async function () {
          }) 
     })
 
-    console.log(list)
+    // console.log(list)
     return list
     
    
