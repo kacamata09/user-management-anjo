@@ -144,13 +144,21 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
                 enabled : false},
             jwtUserinfo : {
                 enabled: true
+            }, 
+            revocation: {
+                enabled:true
+            }, 
+            backchannelLogout: {
+                enabled: true
             }
+            
         }, 
-        revokeGrantPolicy: function revokeGrantPolicy(ctx) {
-            return true;
+        
+        // revokeGrantPolicy: function revokeGrantPolicy(ctx) {
+        //     return true;
             
               
-        }
+        // }
         })
         
         // rute oidc

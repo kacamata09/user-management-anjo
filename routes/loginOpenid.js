@@ -171,18 +171,9 @@ module.exports = (app, provider) => {
     }
   });
 
-  app.get('/logoutopenid', async (requ, resp) => {
-    const interactionDetails = await provider.interactionDetails(requ, resp);
-    const {session } = interactionDetails
-    console.log(session)
-    // const result = {
-    //   login: {
-    //     accountId: false
-    //   },
-    // };
-
-    // await provider.interactionFinished(requ, resp, result, { mergeWithLastSubmission: false });
-  })
+app.post('/token/revocation', (requ, resp) => {
+  resp.send('berhasil keluar')
+})
 
   app.use((err, req, res, next) => {
     if (err instanceof SessionNotFound) {

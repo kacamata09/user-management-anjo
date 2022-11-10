@@ -22,7 +22,7 @@ const upload = multer({storage:penyimpanan})
 
 
 clientRouter.route('/client')
-    .get([midwareIngatSaya.ingatSaya,midwwaraVerifAdmin.isAdmin],client_controller.tampilDaftarClient)
+    .get([midwareIngatSaya.ingatSaya, midwwaraVerifAdmin.isAdmin], client_controller.tampilDaftarClient)
     .post(upload.single('logo_aplikasi'), client_controller.tambahClient)
 
 clientRouter.get('/client/edit/:client_id',midwwaraVerifAdmin.isAdmin, client_controller.tampilEdit)
