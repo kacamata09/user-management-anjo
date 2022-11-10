@@ -25,7 +25,7 @@ module.exports = {
                             // // resp.redirect('/login')
                             // resp.send('akun anda diblokir')
                             // reject({pesan: 'anda di blokir'})
-                            resolve({pesan: 'anda di blokir'})
+                            resolve({pesan: 'Maaf akun anda di blokir, silahkan hubungi admin'})
                             // return 
                         }
                         const passwordVerif = await bcrypt.compare(password, rows[0].password)
@@ -34,7 +34,7 @@ module.exports = {
                             // requ.flash('login', 'password anda salah')
                             // // resp.redirect('/login')
                             // reject({pesan:'password anda salah'})
-                            resolve({pesan:'password anda salah'})
+                            resolve({pesan:'Password yang anda masukkan salah'})
                             // return
                             // resp.send('password anda salah')
                         } else {
@@ -58,7 +58,7 @@ module.exports = {
                         // resp.send('password atau email yang anda masukkan salah')
                         // resp.redirect('/login')
                         // resp.send('email anda salah')
-                        resolve({pesan:'email anda salah'})
+                        resolve({pesan:'Email yang anda masukkan tidak ditemukan'})
                         // return
                     }
                 })
@@ -77,28 +77,5 @@ module.exports = {
 
         
         
-    }, async ambilData() {
-        const configClient = 'select * from clientconfig'
-        const data = function(){
-          return new Promise(function(resolve, reject){
-            koneksi.query(
-                configClient, 
-                function(err, rows){                                                
-                    if(rows === undefined){
-                        reject(new Error("Error rows is undefined"));
-                    }else{
-                        resolve(rows);
-                    }
-                }
-            )}
-        )}
-        const hasil = await data()
-        .then(function(results){
-          return results
-        })
-        .catch(function(err){
-          console.log("Promise rejection error: "+err);
-        })
-        return hasil
-        }
+    },
 }

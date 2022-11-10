@@ -1,24 +1,13 @@
 /* eslint-disable no-console, max-len, camelcase, no-unused-vars */
 const { strict: assert } = require('assert');
-const querystring = require('querystring');
-const { inspect } = require('util');
 
-const isEmpty = require('lodash/isEmpty');
 const { urlencoded } = require('express'); // eslint-disable-line import/no-unresolved
 const cariAkun = require('../pengguna/cariakun')
-const Account = require('../support/account');
 
 const body = urlencoded({ extended: false });
 
-const keys = new Set();
-const debug = (obj) => querystring.stringify(Object.entries(obj).reduce((acc, [key, value]) => {
-  keys.add(key);
-  if (isEmpty(value)) return acc;
-  acc[key] = inspect(value, { depth: null });
-  return acc;
-}, {}), '<br/>', ': ', {
-  encodeURIComponent(value) { return keys.has(value) ? `<strong>${value}</strong>` : value; },
-});
+
+
 
 module.exports = (app, provider) => {
   const { constructor: { errors: { SessionNotFound } } } = provider;
@@ -52,7 +41,6 @@ module.exports = (app, provider) => {
       const pesan = req.flash('pesan')
       switch (prompt.name) {
         case 'login': {
-          
           return res.render('test_login.ejs', {
             pesan,
             client,
@@ -68,6 +56,7 @@ module.exports = (app, provider) => {
           console.log(session)
           return res.render('interaction.ejs', {
             client,
+            redirect_uri:params.redirect_uri,
             akun_user: session.accountId,
             uid,
             details: prompt.details,
@@ -86,22 +75,23 @@ module.exports = (app, provider) => {
 
   app.post('/interaction/:uid/login', body, async (requ, resp, next) => {
     try {
-      const { prompt: { name }, params } = await provider.interactionDetails(requ, resp);
+      const {uid, prompt: { name }, params } = await provider.interactionDetails(requ, resp);
       assert.equal(name, 'login');
       // const account = await Account.findByLogin(requ.body.login);
       const account = await cariAkun.cariUser(requ.body.login, requ.body.password)
-      console.log(params.client_id)
-      console.log(account)
+      // console.log(provider.interactionDetails())
+      // console.log(account)
       
       if (account.pesan != undefined) {
-        resp.send(account.pesan)
+        requ.flash('pesan', account.pesan)
+        // resp.send(account.pesan)
+        resp.redirect(`/interaction/${uid}`)
       } else {
         const result = {
           login: {
             accountId: account.email,
           },
         };
-  
         await provider.interactionFinished(requ, resp, result, { mergeWithLastSubmission: false });
       }
    
@@ -116,7 +106,8 @@ module.exports = (app, provider) => {
       console.log(interactionDetails)
       const { prompt: { name, details }, params, session: { accountId } } = interactionDetails;
       assert.equal(name, 'consent');
-      console.log(accountId)
+
+      console.log(interactionDetails)
       let { grantId } = interactionDetails;
       let grant;
 
@@ -166,19 +157,43 @@ module.exports = (app, provider) => {
         error_description: 'End-User aborted interaction',
       };
       await provider.interactionFinished(req, res, result, { mergeWithLastSubmission: false });
+
     } catch (err) {
       next(err);
     }
   });
 
-app.post('/token/revocation', (requ, resp) => {
-  resp.send('berhasil keluar')
+// app.post('/token/revocation', (requ, resp) => {
+//   resp.send('berhasil keluar')
+// })
+app.get('/keluar', async (requ, resp) => {
+  // const cookiesesi = requ.cookies
+  // cookiesesi.forEach(c => {
+  //   resp.cookie(c, '', {expires: new Date(0)})
+  // // })
+  // resp.clearCookie('__legast')
+  const {cookies} = requ
+  if (cookies) {
+    for (const i in cookies) {
+      resp.clearCookie(i)
+    }
+  }
+  // resp.send(cookies)
+  // resp.send('anda sudah logout')
+  const redirect_uri = requ.query.redirect_uri
+  if (redirect_uri == undefined) {
+    resp.redirect('/')
+    return
+  }
+  resp.redirect(redirect_uri)
+  return
 })
 
   app.use((err, req, res, next) => {
     if (err instanceof SessionNotFound) {
       // handle interaction expired / session not found error
       return res.send('sesi tidak ditemukan')
+      // return res.render('test_login.ejs')
     }
     next(err);
   });
