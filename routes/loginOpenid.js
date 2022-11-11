@@ -90,6 +90,7 @@ module.exports = (app, provider) => {
         const result = {
           login: {
             accountId: account.email,
+            
           },
         };
         await provider.interactionFinished(requ, resp, result, { mergeWithLastSubmission: false });

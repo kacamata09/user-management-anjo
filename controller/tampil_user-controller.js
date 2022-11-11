@@ -23,19 +23,29 @@ module.exports = {
         const simpanData = 'update pengguna set nama = ?, email = ? where id = ?'
         const ambilId = requ.params.id
         const ambilData = requ.body
-
-        koneksi.query(simpanData, [ambilData.nama, ambilData.email , ambilId], (err, rows, field)=> {
+        koneksi.query('select * from pengguna where email = ?', ambilData.email, (err, rows, field) => {
             if (err) throw err
 
-            resp.redirect('/user')
+            if (rows.length > 0) {
+                requ.flash('pesan', 'Email yang anda masukkan sudah terdaftar sebelumnya')
+                resp.redirect(`/user/edit/${ambilId}`)
+            } else {
+                koneksi.query(simpanData, [ambilData.nama, ambilData.email , ambilId], (err, rows, field)=> {
+                    if (err) throw err
+        
+                    resp.redirect('/user')
+                })
+            }
         })
+       
     },
     tampilEdit(requ, resp) {
         const ambilData = 'select * from pengguna where id = ?'
         const ambilId = requ.params.id
+        const pesan = requ.flash('pesan')
 
         koneksi.query(ambilData, ambilId, (err, rows, field) => {
-            resp.render('user_edit.ejs', user=rows[0])
+            resp.render('user_edit.ejs', {user:rows[0], pesan})
         })
     }
 }

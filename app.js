@@ -53,10 +53,10 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     secret: 'hacker, jangan menyerang',
-    name: 'secretName',
+    name: 'sesiLogin',
     cookie: {
         sameSite: true,
-        maxAge: 600000
+        maxAge: 6000 * 10 * 24
     },
 }))
 app.use(cookieParser())
@@ -149,6 +149,9 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
                 enabled:true
             }, 
             backchannelLogout: {
+                enabled: true
+            },
+            jwtUserinfo: {
                 enabled: true
             },
             rpInitiatedLogout: {
