@@ -1,8 +1,8 @@
-/* eslint-disable no-console, max-len, camelcase, no-unused-vars */
 const { strict: assert } = require('assert');
 
-const { urlencoded } = require('express'); // eslint-disable-line import/no-unresolved
+const { urlencoded } = require('express'); 
 const cariAkun = require('../pengguna/cariakun')
+const Account = require('../support/account');
 
 const body = urlencoded({ extended: false });
 
@@ -79,6 +79,7 @@ module.exports = (app, provider) => {
       assert.equal(name, 'login');
       // const account = await Account.findByLogin(requ.body.login);
       const account = await cariAkun.cariUser(requ.body.login, requ.body.password)
+      
       // console.log(provider.interactionDetails())
       // console.log(account)
       
@@ -90,7 +91,6 @@ module.exports = (app, provider) => {
         const result = {
           login: {
             accountId: account.email,
-            
           },
         };
         await provider.interactionFinished(requ, resp, result, { mergeWithLastSubmission: false });

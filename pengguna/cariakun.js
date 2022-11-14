@@ -3,6 +3,33 @@ const bcrypt = require('bcrypt')
 const { reject } = require('lodash')
 
 
+async function cariData(email) {
+    const cariUser = 'select * from pengguna where email = ?'
+    const user = () => {
+        return new Promise(function(resolve, reject) {
+            koneksi.query(cariUser, email, async (err, rows, field) => {
+                if (err) throw err
+                if (rows.length > 0) {
+                    resolve(rows[0])
+                } else {
+                    resolve({pesan:'Email yang anda masukkan tidak ditemukan'})
+                }
+            })
+        })
+    }
+    const hasil = await user()
+    .then(function(results){
+      return results
+    })
+    .catch(function(err){
+      console.log("Promise rejection error: "+err);
+    // reject(err)
+    })
+    return hasil
+
+}
+
+
 module.exports = {
     async cariUser(email, password) {
         // const getData = requ.body
@@ -78,4 +105,21 @@ module.exports = {
         
         
     },
+    async findAccount(ctx, sub, token) {
+        const dataPengguna = await cariData(sub)
+        return {
+          accountId: sub,
+          profile: dataPengguna.nama,
+          email: dataPengguna.email,
+   
+          async claims(use, scope) {
+            return { 
+                sub, 
+                nama: dataPengguna.nama, 
+                email: dataPengguna.email, 
+                role:dataPengguna.role, 
+                status:dataPengguna.status };
+          },
+        };
+      }
 }
