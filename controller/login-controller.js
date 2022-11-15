@@ -14,7 +14,7 @@ module.exports = {
     },
     login_user(requ, resp) {
         const getData = requ.body
-        const cariUser = 'select * from pengguna where email = ?'
+        const cariUser = 'select * from pengguna where email = ? or username = ?'
         if (getData.ingat === '1') {
             koneksi.query('insert into session values(?)', getData.email, (err, rows, field) => {
                 resp.cookie('email', getData.email)
@@ -23,7 +23,7 @@ module.exports = {
         }
         console.log(requ.cookies.email)
         // console.log(getData.ingat)
-        koneksi.query(cariUser, [getData.email], async (err, rows, field) => {
+        koneksi.query(cariUser, [getData.email, getData.email], async (err, rows, field) => {
             if (err) throw err
             if (rows.length > 0) {
 
@@ -52,7 +52,7 @@ module.exports = {
                
 
             } else {
-                requ.flash('login', 'Email yang anda masukkan salah')
+                requ.flash('login', 'Email atau username yang anda masukkan tidak dapat ditemukan')
                 // resp.send('password atau email yang anda masukkan salah')
                 resp.redirect('/login')
                 return

@@ -47,8 +47,8 @@ passport.deserializeUser(function(user, done) {
 Issuer.discover('http://localhost:3000/oidc') 
   .then(function (oidcIssuer) {
     var client = new oidcIssuer.Client({
-      client_id: '3Wd37hFq6mRCU0cw3637FmDhgXN',
-      client_secret: 'QH2OJ1yxI8TpPOZ81cdqsz3QGBa',
+      client_id: 'yodEDJdBXXGizyummI8HmSGSkDj',
+      client_secret: '6ITs2bOo7GmDRN5ivohPnk06RpW',
       redirect_uris: ["http://localhost:2000/auth/login/callback"],
       response_types: ['code'], 
       
@@ -89,6 +89,7 @@ app.get('/auth/login/callback',(req,res,next) =>{
 
 app.get('/beranda', (requ, resp) => {
   resp.send('<h1>selamat anda berhasil login di client 2</h1>')
+  
   resp.end(JSON.stringify({tokenset:requ.session.tokenSet,userinfo:requ.session.userinfo},null,2));
 })
 

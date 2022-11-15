@@ -10,7 +10,7 @@ module.exports = {
 
     },
     tambah(requ, resp) {
-        const simpanData = 'insert into pengguna(nama, email, role, password, status) values(?,?,?,?, "aktif")'
+        const simpanData = 'insert into pengguna(nama, email, role, password, status, username) values(?,?,?,?, "aktif", ?)'
         const getData = requ.body
         const cariData = 'select * from pengguna where email = ?'
         if (getData.password != getData.confirmPassword) {
@@ -20,7 +20,7 @@ module.exports = {
             if (err) throw err
             const passwordHash = await bcrypt.hash(getData.password, 10)
             if (rows.length == 0) {
-                koneksi.query(simpanData, [getData.nama, getData.email, 'user', passwordHash], (err, rows, field) => {
+                koneksi.query(simpanData, [getData.nama, getData.email, 'user', passwordHash, getData.username], (err, rows, field) => {
                     if(err) throw err
                     // resp.redirect('/user/register')
                     resp.redirect('/user')
