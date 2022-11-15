@@ -8,10 +8,11 @@
     <div class="login-box">
   
       <!-- /.login-logo -->
-      <% if (client.logoUri) { %><img height="50" src="<%= client.logoUri %>"><% } %>
       <div class="card card-outline card-primary">
-        <div class="card-header text-center">
-          <h2><b><i>Lanjut ke <%= client.clientName %>?</i></b></h2>
+        <div class="card-header text-center"> 
+          <h2><b>Masuk Ke <%= client.clientName %>?</b></h2>
+      <% if (client.logoUri) { %><img height="50" src="<%= client.logoUri %>"><% } %>
+
         </div>
         <div class="card-body">
           <p class="login-box-msg">Apakah anda yakin ingin lanjut ke App <b><%= client.clientName %></b> menggunakan akun <b><%= akun_user %></b> ?</p>
