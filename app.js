@@ -5,6 +5,7 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const koneksi = require('./config/database')
 const multer = require('multer')
+const helmet = require('helmet')
 
 // cari akun
 const cariAkun = require('./pengguna/cariakun')
@@ -35,6 +36,10 @@ const flash = require('connect-flash')
 
 // inisiasi aplikasi
 const app = express()
+
+
+// helmet
+// app.use(helmet())
 
 
 // multer 
@@ -73,8 +78,8 @@ app.use(express.static(path.join(__dirname, 'static')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
-// route khusus oidc
-// app.use()
+
+
 
 
 
@@ -240,7 +245,6 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
         // }
         })
 
-
         // rute oidc
         route_oidc(app, oidc)
         
@@ -257,6 +261,31 @@ const tersambung = async () => {
 }
 
 tersambung()
+
+
+
+// halaman error 404
+// app.use(function(requ, resp, next) {
+//   resp.status(404)
+//     // respond with html page
+//   if (requ.accepts('html')) {
+//     resp.render('halaman_error/404', { url: requ.url });
+//     // resp.send(`<h1>Maaf halaman ya`)
+//     return;
+//   }
+
+//   // respond with json
+//   if (requ.accepts('json')) {
+//     resp.json({ error: 'Not found' });
+//     return;
+//   }
+
+//   // default to plain-text. send()
+//   resp.type('txt').send('Not found');
+  
+
+  
+// });
 
 const PORT = 3000
 const display = `SERVER INI BERJALAN DI PORT : ${PORT}`

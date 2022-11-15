@@ -34,16 +34,16 @@
 <body class="hold-transition register-page">
     <div class="register-box">
       <div class="register-logo">
-        <a href="#"><b>Admin</b>LTE</a>
+        <a href="#"><b>Edit </b>Client</a>
       </div>
     
       <div class="card">
         <div class="card-body register-card-body">
-          <p class="login-box-msg">Edit Data User</p>
+          <p class="login-box-msg">Edit Data Client</p>
     
           <form action="" method="post">
             <div class="input-group mb-3">
-              <input type="text" class="form-control"  placeholder="Nama Client" name="namaApp"   required>
+              <input type="text" class="form-control"  placeholder="Nama Client" name="namaApp"  value="<%= clients.nama_client %>" required>
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-user"></span>
@@ -51,7 +51,7 @@
               </div>
             </div>
             <div class="input-group mb-3">
-              <input type="text" class="form-control"  placeholder="Redirect Uri" name="redirect_uri"  required>
+              <input type="text" class="form-control"  placeholder="Redirect Uri" name="redirect_uri" value="<%= clients.redirect_uri %>"  required>
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>

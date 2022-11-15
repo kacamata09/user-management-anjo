@@ -51,6 +51,7 @@ def login():
 def auth():
     try:
         token = oauth.webflask.authorize_access_token()
+        print(request.url)
         print(token)
         user = oauth.webflask.userinfo()
         session['id'] = user['sub']

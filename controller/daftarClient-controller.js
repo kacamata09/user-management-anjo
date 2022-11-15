@@ -17,11 +17,13 @@ function randomString(length) {
 
 module.exports = {
   async tampilDaftarClient(requ, resp) {
+    console.log()
     koneksi.query('select * from clientconfig', (err, rows, field) => {
       if (err) throw err
 
       if(rows.length > 0) {
-        resp.render('tampil_client.ejs', clients=rows)
+        const clients=rows
+        resp.render('tampil_client.ejs', {clients})
         return
       }
     })
@@ -64,7 +66,16 @@ module.exports = {
     })
   },
   tampilEdit(requ, resp) {
-    resp.render('edit_client.ejs')
+    const client_id = requ.params.client_id
+    koneksi.query('select * from clientconfig where client_id = ?', client_id, (err, rows, field) => {
+      if (err) throw err
+
+      if(rows.length > 0) {
+        const clients=rows[0]
+        resp.render('edit_client.ejs', {clients})
+        return
+      }
+    })
   }
   
 
