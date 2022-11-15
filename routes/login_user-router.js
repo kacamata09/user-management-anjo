@@ -5,9 +5,10 @@ const midwareVerifLogin = require('../config/verifyLogin')
 
 const loginUserRouter = express.Router()
 
-loginUserRouter.route('/login')
+loginUserRouter.route('/login', )
     .get(midwareVerifLogin.isLogout ,controllerLogin.tampilloginUser)
     .post(controllerLogin.login_user)
 
 
 module.exports = loginUserRouter
+;

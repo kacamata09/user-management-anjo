@@ -173,6 +173,7 @@
                       <tr>
                         <th>id</th>
                         <th>Nama</th>
+                        <th>Username</th>
                         <th>Email</th>
                         <th>Status</th>
                         <th>Aksi</th>
@@ -183,6 +184,7 @@
                           <tr>
                               <td><%= u.id %></td>
                               <td><%= u.nama %></td>
+                              <td><%= u.username %></td>
                               <td><%= u.email %></td>
                               <td><%= u.status %></td>
                           
@@ -315,7 +317,10 @@
                             <div class="form-group">
                               <form action="/user/register" method="POST">
                                 <label for="nama">Nama</label>
-                                     <input type="text" class="form-control" id="nama" name="nama" placeholder="masukan nama" required>
+                                  <input type="text" class="form-control" id="nama" name="nama" placeholder="masukan nama" required>
+
+                                <label for="nama">Username</label>
+                                  <input type="text" class="form-control" id="username" name="username" placeholder="masukan username" required>
                                 
                                  <label for="role">Role</label>
                                   <input type="text" class="form-control" id="role" name="role" value="user" disabled>

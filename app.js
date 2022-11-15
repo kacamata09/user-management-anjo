@@ -245,6 +245,8 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
         // }
         })
 
+        // helmet provider
+        // oidc.app.use(helmet())
         // rute oidc
         route_oidc(app, oidc)
         
