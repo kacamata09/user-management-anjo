@@ -30,14 +30,22 @@ oauth.register(
 
 @app.route('/')
 def homepage():
+
     user = session.get('id')
 
     return render_template('home.html', user=user)
 
 
+@app.route('/ambilsesi')
+def sesi():
+    session['id'] = 'fu'
+    return 'halo'
+
+
 @app.route('/login')
 def login():
     # redirect_uri = url_for('auth')
+
     redirect_uri = 'http://localhost:4900/auth'
     return oauth.webflask.authorize_redirect(redirect_uri)
 
@@ -53,7 +61,7 @@ def auth():
         print(user)
         return redirect('/beranda')
     except:
-        if request.args.get('error') == None:
+        if request.args.get('error'):
             return redirect('/')
         print(request.url)
         redirect_uri = 'http://localhost:4900/auth'

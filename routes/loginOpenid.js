@@ -3,6 +3,7 @@ const { strict: assert } = require('assert');
 const { urlencoded } = require('express'); 
 const cariAkun = require('../pengguna/cariakun')
 const body = urlencoded({ extended: false });
+const koneksi = require('../config/database')
 
 
 
@@ -77,7 +78,9 @@ module.exports = (app, provider) => {
       assert.equal(name, 'login');
       // const account = await Account.findByLogin(requ.body.login);
       const account = await cariAkun.cariUser(requ.body.login, requ.body.password)
-      
+      requ.session.loggedin = true;
+      requ.session.userid = account.id;
+      requ.session.username = account.nama;
       // console.log(provider.interactionDetails())
       // console.log(account)
       
@@ -170,15 +173,21 @@ app.get('/keluar', async (requ, resp) => {
   // cookiesesi.forEach(c => {
   //   resp.cookie(c, '', {expires: new Date(0)})
   // // })
-  // resp.clearCookie('__legast')
-  const {cookies} = requ
-  if (cookies) {
-    for (const i in cookies) {
-      resp.clearCookie(i)
-    }
-  }
+  // const {cookies} = requ
+  // if (cookies) {
+  //   for (const i in cookies) {
+  //     resp.clearCookie(i)
+  //   }
+  // }
   // resp.send(cookies)
   // resp.send('anda sudah logout')
+  const email = requ.cookies.email
+  resp.clearCookie('_session.legacy')
+  koneksi.query('delete from session where email = ?', email, (err, rows, field) => {})
+  resp.cookie('email', undefined)
+  requ.session.destroy(function(err) {
+      // resp.send('selamat anda berhasil logout, silahkan login <a href="/login">Login</a>')
+  })
   const redirect_uri = requ.query.redirect_uri
   if (redirect_uri == undefined) {
     resp.redirect('/')

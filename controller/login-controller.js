@@ -91,6 +91,7 @@ module.exports = {
     logout(requ, resp) {
         // requ.flash('login', 'Selamat anda telah berhasil logout')
         const email = requ.cookies.email
+        resp.clearCookie('_session.legacy')
         koneksi.query('delete from session where email = ?', email, (err, rows, field) => {})
         resp.cookie('email', undefined)
         requ.session.destroy(function(err) {

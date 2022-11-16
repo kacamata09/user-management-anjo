@@ -269,11 +269,18 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
           // const interaksi = await oidc.interactionDetails(requ, resp)
           const signedIn = !!session.accountId
           // const sesi = oidc.session
-          console.log(sign)
+          console.log(signedIn)
+          console.log(session)
+          session.accountId = 'adnsjhr'
+          session.authorizations = {
+            vyTYXCtCMai8UC1gJpIwDcDi8Cb: {
+              sid: 'j28-BHRwrAXqXQavoNwv4',
+              grantId: 'H_ae90RkSb-EHUdoJjKgK2nX-h1KV6CzfttjQelXwUu'
+            } }
           console.log(session)
           resp.cookie('_interaction', session.uid)
-          resp.redirect(`/interactions/${session.uid}`)
-          // resp.send('coba aja')
+          // resp.redirect(`/interactions/${session.uid}`)
+          resp.send('coba aja')
         })
         
         app.use('/oidc', oidc.callback())
