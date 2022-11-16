@@ -1,4 +1,4 @@
-  <%- include('snippets/headportal') %>
+<%- include('snippets/headportal') %>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Single Sign On</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,34 +35,19 @@
 
   <div class="container" style="margin-top: 70px;">
     <div class="card-deck">
-      <div class="card">
-        <div class="card-body">
-          <img class="card-img-top" src="../static/logo_client/" alt="Card image">
-          <p class="card-text">Some more text to increase the height</p>
-          <button type="button" class="btn btn-primary">login ke aplikasi</button>
+
+      <% clients.forEach(c => { %>
+
+        <div class="card">
+          <div class="card-body text-center">
+            <img class="card-img-top img-fluid" src="../static/logo_client/<%= c.logo_app %>"  alt="Card image">
+            <p class="card-text"><%= c.nama_client %></p>
+            <a href="<%= c.redirect_uri %>" class="btn btn-primary">Login</a>
+          </div>
         </div>
-      </div>
-      <div class="card">
-        <div class="card-body text-center">
-          <img class="card-img-top img-fluid" src="../static/logo_client/"  alt="Card image">
-          <p class="card-text">Some more text to increase the height</p>
-          <button type="button" class="btn btn-primary">login ke aplikasi</button>
-        </div>
-      </div>
-      <div class="card" >
-        <div class="card-body text-center">
-          <img class="card-img-top" src="../static/logo_client/" alt="Card image">
-          <p class="card-text">Some more text to increase the height</p>
-          <a href="#" class="btn btn-primary stretched-link">login ke aplikasi</a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body text-center">
-          <img class="card-img-top" src="../static/logo_client/" alt="Card image">
-          <p class="card-text">Some more text to increase the height</p>
-          <a href="#" class="btn btn-primary stretched-link">Login ke aplikasi</a>
-        </div>
-      </div>
+  
+     <% }) %>
+      
     </div>
   </div>
 

@@ -7,6 +7,7 @@ const koneksi = require('./config/database')
 const multer = require('multer')
 const helmet = require('helmet')
 
+
 // cari akun
 const cariAkun = require('./pengguna/cariakun')
 
@@ -181,7 +182,15 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
               },
             ],
           },
+        interactions: {
+            url: async function interactionsUrl(ctx, interaction) {
+            return `/interaction/${interaction.uid}`;
+          }
+        },
         features : {
+          clientCredentials : {
+            enabled: true
+          },
             devInteractions: {
                 enabled : false},
             jwtUserinfo : {
@@ -252,6 +261,20 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
         // oidc.app.use(helmet())
         // rute oidc
         route_oidc(app, oidc)
+
+
+        app.get('/cobalogin', async (requ, resp, next)=>{
+          const ctx = oidc.app.createContext(requ, resp)
+          const session = await oidc.Session.get(ctx)
+          // const interaksi = await oidc.interactionDetails(requ, resp)
+          const signedIn = !!session.accountId
+          // const sesi = oidc.session
+          console.log(sign)
+          console.log(session)
+          resp.cookie('_interaction', session.uid)
+          resp.redirect(`/interactions/${session.uid}`)
+          // resp.send('coba aja')
+        })
         
         app.use('/oidc', oidc.callback())
 
