@@ -76,6 +76,12 @@ module.exports = {
         return
       }
     })
+  }, 
+  tampilPortal(requ, resp) {
+    koneksi.query('select * from clientconfig', (err, rows, field) => {
+      if (err) throw err
+      resp.render('portal.ejs', clients=rows)
+    })
   }
   
 

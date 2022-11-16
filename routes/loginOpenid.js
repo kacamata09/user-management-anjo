@@ -2,8 +2,6 @@ const { strict: assert } = require('assert');
 
 const { urlencoded } = require('express'); 
 const cariAkun = require('../pengguna/cariakun')
-const Account = require('../support/account');
-
 const body = urlencoded({ extended: false });
 
 

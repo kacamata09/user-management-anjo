@@ -1,7 +1,6 @@
 from flask import Flask, url_for, session, request, jsonify
 from flask import render_template, redirect
 from authlib.integrations.flask_client import OAuth
-from authlib.integrations.requests_client import OAuth2Session
 import jwt
 
 
@@ -9,10 +8,6 @@ app = Flask(__name__)
 app.secret_key = '!secret'
 # app.config.from_object('config')
 
-client = OAuth2Session(
-    'client_id', 'client_secret',
-    token_endpoint_auth_method="client_secret_basic",
-)
 
 CONF_URL = 'http://localhost:3000/oidc/.well-known/openid-configuration'
 oauth = OAuth(app)
@@ -58,9 +53,12 @@ def auth():
         print(user)
         return redirect('/beranda')
     except:
+        if request.args.get('error') == None:
+            return redirect('/')
+        print(request.url)
         redirect_uri = 'http://localhost:4900/auth'
         return oauth.webflask.authorize_redirect(redirect_uri)
-        # return redirect('/')
+    # return redirect('/')
 
 
 @app.route('/beranda')
