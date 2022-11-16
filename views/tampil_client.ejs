@@ -1,55 +1,3 @@
-<!-- <html lang="en"> 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Client</title>
-</head>
-<body>
-    
-
-    <form action="" method="post">
-    <table>
-            <tr>
-                <td>Nama Client</td>
-                <td><input type="text" name="client_name"></td>
-            </tr>
-            <tr>
-                <td>Redirect URI Client</td>
-                <td><input type="text" name="redirect_uri"></td>
-            </tr>
-            
-        </table>
-        <button type="submit">Simpan</button>
-    </form>
-    <br>
-    <br>
-    <br>
-
-    <table border="2"> 
-        <tr>
-            <th>Nama Client</th>
-            <th>Client ID</th>
-            <th>Client Secret</th>
-            <th>Redirect URI</th>
-            <th>Aksi</th>
-        </tr>
-        <% clients.forEach(c => { %>
-            <tr>
-                <td><%= c.nama_client %></td>
-                <td><%= c.client_id %></td>
-                <td><%= c.client_secret %></td>
-                <td><%= c.redirect_uri %></td>
-                <td>
-                    <a href="/client/edit/<%= c.client_id %>">Edit</a>
-                    <a href="/client/hapus/<%= c.client_id %>">Hapus</a>
-                </td>
-            </tr>
-        <% }) %>
-    </table>
-</body>
-</html>-->
-
 <%- include('snippets/head') %>
     
       <!-- Navbar -->
@@ -215,31 +163,11 @@
                 </div>
 
                           <script>
-                              // const idUser = document.getElementById('hapusUserid')
-                              // const hapus = document.getElementById('hapusUser')
-                              // // hapus.setAttribute('href', `/user/hapus/${idUser.value}`)
-                              // idUser.addEventListener('click', () => {
-                              //   const modalMuncul = document.getElementById('modal-danger')
-                                
-                              //   const idUserHapus = document.getElementById('hapusUserid')
-
-                              //   hapus.setAttribute('href', `/user/hapus/${idUserHapus.value}`)
-                              // })
                             function fungsiUbahLink(idnya, namanya) {
-                              // alert("hapus data !");
-                        
-                              // const idUser = document.getElementById('hapusUserid')
                               const hapus = document.getElementById('hapusUser')
                               const nama = document.getElementById('pesan')
-                              // hapus.setAttribute('modal', 'show')
                               nama.innerText = `apakah ada yakin menghapus data client yang bernama  ${namanya}`
                               hapus.setAttribute('href', `/client/hapus/${idnya}`)
-
-                              // idUser.addEventListener('onclick', () => {
-                              //   hapus.setAttribute('href', `/user/hapus/${idUser.value}`)
-                              // })
-
-
                             }
 
                             </script>
@@ -294,19 +222,6 @@
                         </button>
                       </div>
                       
-                      <!-- <div class="alert alert-danger d-flex align-items-center" role="alert" hidden="1">
-                  
-                        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-                          <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                          </symbol>
-                        </svg>
-                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                        <div >
-                          <span></span>
-                        </div>
-                      </div> -->
-
                       <div class="text-center"><span class="h4 text-center" id="pesan"></span></div>
                       <div class="text-center"><span class="h4 text-center" id="email"></span></div>
                      

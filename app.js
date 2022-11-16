@@ -99,9 +99,12 @@ app.use(daftarClientRoute)
 
 // coba dashboard dari johan
 app.get('/coba', (requ, resp) => {
-    resp.render('index.ejs')
+    resp.render('portal.ejs')
 })
 
+app.get('/hitam', (requ, resp) => {
+  resp.render('index.ejs')
+})
 // coba flash
 app.get('/cobacoba', (requ, resp) => {
     resp.render('cobaflash.ejs')
