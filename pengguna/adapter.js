@@ -47,8 +47,7 @@ const models = [
     data: { type: Sequelize.JSON },
     expiresAt: { type: Sequelize.DATE, },
     consumedAt: { type: Sequelize.DATE,   },
-  }, 
-  {timestamps: false}));
+  },));
 
   return map;
 }, new Map());
