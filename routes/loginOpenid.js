@@ -6,6 +6,10 @@ const body = urlencoded({ extended: false });
 const koneksi = require('../config/database')
 
 
+// midware 
+const midwareLogin = require('../config/verifyLogin')
+
+
 
 
 module.exports = (app, provider) => {
@@ -28,7 +32,7 @@ module.exports = (app, provider) => {
 
   
 
-  app.get('/login/:uid', async (req, res, next) => {
+  app.get('/login/:uid', midwareLogin.isLogout, async (req, res, next) => {
     try {
       const {
         uid, prompt, params, session,
@@ -40,6 +44,7 @@ module.exports = (app, provider) => {
       const pesan = req.flash('pesan')
       switch (prompt.name) {
         case 'login': {
+         
           return res.render('test_login.ejs', {
             pesan,
             client,
@@ -73,22 +78,19 @@ module.exports = (app, provider) => {
   });
 
   app.post('/login/:uid/login', body, async (requ, resp, next) => {
+    if (requ.body.ingat === '1') {
+      koneksi.query('insert into session values(?)', requ.body.login, (err, rows, field) => {
+          resp.cookie('email', requ.body.login)
+      })
+
+    }
     try {
       const {uid, prompt: { name }, params } = await provider.interactionDetails(requ, resp);
       assert.equal(name, 'login');
       // const account = await Account.findByLogin(requ.body.login);
       const account = await cariAkun.cariUser(requ.body.login, requ.body.password)
       // if (account.pesan == undefined) {
-        if (requ.body.ingat === '1') {
-          koneksi.query('insert into session values(?)', requ.body.email, (err, rows, field) => {
-              resp.cookie('email', requ.body.email)
-          })
-
-        }
-      requ.session.loggedin = true;
-      requ.session.openid = true
-      requ.session.userid = account.id;
-      requ.session.username = account.nama;
+       
       // }
      
       // console.log(provider.interactionDetails())
@@ -99,7 +101,11 @@ module.exports = (app, provider) => {
         // resp.send(account.pesan)
         resp.redirect(`/interaction/${uid}`)
       } else {
-        
+       
+        requ.session.loggedin = true;
+        requ.session.openid = true
+        requ.session.userid = account.id;
+        requ.session.username = account.nama;
         const result = {
           login: {
             accountId: account.email,
@@ -211,7 +217,8 @@ app.get('/keluar', async (requ, resp) => {
   app.use((err, req, res, next) => {
     if (err instanceof SessionNotFound) {
       // handle interaction expired / session not found error
-      return res.send('sesi tidak ditemukan')
+      // return res.send('sesi tidak ditemukan')
+      return res.redirect('/login')
       // return res.render('test_login.ejs')
     }
     next(err);

@@ -25,11 +25,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <% if (session.openid) { %>
-            <% if (session.username == 'admin') { %>
-              <a class="dropdown-item" href="/admin">Dashboard</a>
-            <% } else { %>
-                <a class="dropdown-item" href="/beranda">Dashboard</a>
-            <% } %>
+            <a class="dropdown-item" href="/beranda">Dashboard</a>
             <a class="dropdown-item" href="/logout">Logout</a>
           <% } else { %>
           <a class="dropdown-item" href="/oidc/auth?client_id=Xkv3aRBNyjq06XuhYYxpO8g9UGn&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fportalclient">Login</a>
@@ -48,6 +44,10 @@
 
 <div class="row">
 <% clients.forEach(c => { %>
+
+  <% if (c.client_id == 'Xkv3aRBNyjq06XuhYYxpO8g9UGn') { %>
+
+   <% } else { %>
   
   <div class="col-md-6 col-lg-4 col-12">
   <img class="card-img-top" src="/logo_client/<%= c.logo_app %>" alt="Card image cap">
@@ -57,6 +57,8 @@
     <a href="<%= c.redirect_uri %>" class="btn btn-primary">Login</a>
   </div>
   </div>
+  <% } %>
+
   <% }) %>
   </div>
   </div>

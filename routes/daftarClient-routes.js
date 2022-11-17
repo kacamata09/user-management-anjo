@@ -28,7 +28,7 @@ clientRouter.route('/client')
 clientRouter.get('/client/edit/:client_id',midwwaraVerifAdmin.isAdmin, client_controller.tampilEdit)
 clientRouter.post('/client/edit/:client_id',midwwaraVerifAdmin.isAdmin, client_controller.editClient)
 clientRouter.get('/client/hapus/:client_id',midwwaraVerifAdmin.isAdmin, client_controller.hapusClient)
-clientRouter.get('/', midwareLogin.isLogin, client_controller.tampilPortal)
+clientRouter.get('/', midwareLogin.isLogin, midwareIngatSaya.ingatSaya, client_controller.tampilPortal)
 
 
 
