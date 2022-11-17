@@ -1,49 +1,11 @@
 <%- include('snippets/head') %>
-
-<!---
-<h3>Halaman User</h3>
-    <ul>
-        <li><a href="/user/register">Register User</a></li>
-    </ul>
-<% if (users.length > 0) { %>
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr class="text-center">
-                <th>Nama</th>
-                <th>Email</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% users.forEach((u) => { %>
-                <tr>
-                    <td><%= u.nama %></td>
-                    <td><%= u.email %></td>
-                    <td>
-                        <a class="btn btn-danger" href="/user/hapus/<%= u.id %>">Hapus</a>
-                        <a class="btn btn-primary" href="/user/edit/<%= u.id %>">Edit</a>
-                    </td>
-                </tr>
-            <% }) %>
-        </tbody>
-    </table>
-<% } else { %>
-    <h3>tidak ada data yang bisa ditampilkan</h3>
-<% } %>
-    
-<%- include('snippets/footer') %>
--->
 <head>
   <title>DATA USER</title>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
     
-      <!-- Preloader -->
-      <!-- <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="/dasboars/AdminLTE-3.2.0/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-      </div> -->
-    
+  
       <!-- Navbar -->
       <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <!-- Left navbar links -->
@@ -157,7 +119,7 @@
                 <div class="card">
                   <div class="card-header">
                     <h2 class="card-title">
-                    <button type="button" class="btn btn-block btn-success btn-xs" data-toggle="modal" data-target="#modal-success">Tambah data</button>
+                    <button type="button" class="btn btn-block btn-success btn-xm" data-toggle="modal" data-target="#modal-success">Tambah data</button>
                   </h2>
                   </div>
                   <!-- /.card-header -->
