@@ -22,14 +22,14 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Menu
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <% if (session.openid) { %>
             <a class="dropdown-item" href="/">Dashboard</a>
             <a class="dropdown-item" href="/logout">Logout</a>
           <% } else { %>
           <a class="dropdown-item" href="/oidc/auth?client_id=Xkv3aRBNyjq06XuhYYxpO8g9UGn&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fportalclient">Login</a>
           <% } %>
-        </div>
+        </div> -->
       </ul>
       </nav>
     </div>
@@ -40,21 +40,19 @@
   <div class="container" >
 
 
-
+<div class="row">
 <% clients.forEach(c => { %>
-<div class="card col-12" style="width: 27rem;">
+  <div class="col-md-6 col-lg-4 col-12">
   <img class="card-img-top" src="../static/logo_client/<%= c.logo_app %>" alt="Card image cap">
-  <div class="card-body">
+  <div class="card mb-4">
     <h5 class="card-title"><%= c.nama_client %></h5>
     <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
     <a href="<%= c.redirect_uri %>" class="btn btn-primary">Login</a>
   </div>
   </div>
-
   <% }) %>
-
   </div>
   </div>
-  
+  </div>
   
 <%- include('snippets/footerportal') %>
