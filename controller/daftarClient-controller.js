@@ -79,13 +79,13 @@ module.exports = {
   }, 
   tampilPortal(requ, resp) {
     if (requ.query.error) {
-      resp.redirect('/')
+      return resp.redirect('/')
     }
     koneksi.query('select * from clientconfig', (err, rows, field) => {
       if (err) throw err
 
       const session = requ.session
-      resp.render('portal.ejs', {clients:rows, session})
+      return resp.render('portal.ejs', {clients:rows, session})
     })
   }
   

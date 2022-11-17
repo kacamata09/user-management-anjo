@@ -19,10 +19,11 @@
       </ul>
       
       <ul class="nav-item dropdown my-2 my-lg-0">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Menu
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Menu
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <% if (session.openid) { %>
             <% if (session.username == 'admin') { %>
               <a class="dropdown-item" href="/admin">Dashboard</a>
@@ -47,6 +48,7 @@
 
 <div class="row">
 <% clients.forEach(c => { %>
+  
   <div class="col-md-6 col-lg-4 col-12">
   <img class="card-img-top" src="/logo_client/<%= c.logo_app %>" alt="Card image cap">
   <div class="card mb-4">

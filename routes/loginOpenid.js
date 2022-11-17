@@ -78,6 +78,18 @@ module.exports = (app, provider) => {
       assert.equal(name, 'login');
       // const account = await Account.findByLogin(requ.body.login);
       const account = await cariAkun.cariUser(requ.body.login, requ.body.password)
+      // if (account.pesan == undefined) {
+        if (requ.body.ingat === '1') {
+          koneksi.query('insert into session values(?)', requ.body.email, (err, rows, field) => {
+              resp.cookie('email', requ.body.email)
+          })
+
+        }
+      requ.session.loggedin = true;
+      requ.session.openid = true
+      requ.session.userid = account.id;
+      requ.session.username = account.nama;
+      // }
      
       // console.log(provider.interactionDetails())
       // console.log(account)
@@ -87,16 +99,7 @@ module.exports = (app, provider) => {
         // resp.send(account.pesan)
         resp.redirect(`/interaction/${uid}`)
       } else {
-        if (requ.body.ingat === '1') {
-          koneksi.query('insert into session values(?)', requ.body.email, (err, rows, field) => {
-              resp.cookie('email', requ.body.email)
-          })
-
-      }
-      requ.session.loggedin = true;
-      requ.session.openid = true
-      requ.session.userid = account.id;
-      requ.session.username = account.nama;
+        
         const result = {
           login: {
             accountId: account.email,

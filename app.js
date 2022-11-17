@@ -42,14 +42,14 @@ const app = express()
 
 // helmet
 // app.use(helmet())
-const directives = helmet.contentSecurityPolicy.getDefaultDirectives();
-delete directives['form-action'];
-app.use(helmet({
-  contentSecurityPolicy: {
-    useDefaults: false,
-    directives,
-  },
-}));
+// const directives = helmet.contentSecurityPolicy.getDefaultDirectives();
+// delete directives['form-action'];
+// app.use(helmet({
+//   contentSecurityPolicy: {
+//     useDefaults: false,
+//     directives,
+//   },
+// }));
 
 
 // multer 
