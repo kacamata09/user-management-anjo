@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt')
 
 module.exports = {
     tampilloginUser(requ, resp) {
+        return resp.redirect('/oidc/auth?client_id=Xkv3aRBNyjq06XuhYYxpO8g9UGn&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F')
+            
         const pesan = requ.flash('login')
         console.log(pesan)
         resp.render('login_user.ejs', {pesan})
@@ -13,6 +15,7 @@ module.exports = {
         resp.render('login_admin.ejs', {pesan})
     },
     login_user(requ, resp) {
+        
         const getData = requ.body
         const cariUser = 'select * from pengguna where email = ? or username = ?'
         if (getData.ingat === '1') {
@@ -60,6 +63,8 @@ module.exports = {
         })
     },
     login_admin(requ, resp) {
+        return resp.redirect('/oidc/auth?client_id=Xkv3aRBNyjq06XuhYYxpO8g9UGn&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fportalclient')
+
         const getData = requ.body
         const cariUser = 'select * from pengguna where email = ? and password = SHA2(?,512)'
 

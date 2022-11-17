@@ -28,7 +28,7 @@ module.exports = (app, provider) => {
 
   
 
-  app.get('/interaction/:uid', async (req, res, next) => {
+  app.get('/login/:uid', async (req, res, next) => {
     try {
       const {
         uid, prompt, params, session,
@@ -72,16 +72,13 @@ module.exports = (app, provider) => {
     }
   });
 
-  app.post('/interaction/:uid/login', body, async (requ, resp, next) => {
+  app.post('/login/:uid/login', body, async (requ, resp, next) => {
     try {
       const {uid, prompt: { name }, params } = await provider.interactionDetails(requ, resp);
       assert.equal(name, 'login');
       // const account = await Account.findByLogin(requ.body.login);
       const account = await cariAkun.cariUser(requ.body.login, requ.body.password)
-      requ.session.loggedin = true;
-      requ.session.openid = true
-      requ.session.userid = account.id;
-      requ.session.username = account.nama;
+     
       // console.log(provider.interactionDetails())
       // console.log(account)
       
@@ -90,6 +87,16 @@ module.exports = (app, provider) => {
         // resp.send(account.pesan)
         resp.redirect(`/interaction/${uid}`)
       } else {
+        if (requ.body.ingat === '1') {
+          koneksi.query('insert into session values(?)', requ.body.email, (err, rows, field) => {
+              resp.cookie('email', requ.body.email)
+          })
+
+      }
+      requ.session.loggedin = true;
+      requ.session.openid = true
+      requ.session.userid = account.id;
+      requ.session.username = account.nama;
         const result = {
           login: {
             accountId: account.email,
@@ -103,7 +110,7 @@ module.exports = (app, provider) => {
     }
   });
 
-  app.post('/interaction/:uid/confirm', body, async (req, res, next) => {
+  app.post('/login/:uid/confirm', body, async (req, res, next) => {
     try {
       const interactionDetails = await provider.interactionDetails(req, res);
       console.log(interactionDetails)
@@ -153,7 +160,7 @@ module.exports = (app, provider) => {
     }
   });
 
-  app.get('/interaction/:uid/abort', async (req, res, next) => {
+  app.get('/login/:uid/abort', async (req, res, next) => {
     try {
       const result = {
         error: 'access_denied',

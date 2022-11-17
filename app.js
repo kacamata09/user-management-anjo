@@ -192,11 +192,11 @@ koneksi.query('select * from clientconfig', async (err, rows, field) => {
               },
             ],
           },
-        // interactions: {
-        //     url: async function interactionsUrl(ctx, interaction) {
-        //     return `/interaction/${interaction.uid}`;
-        //   }
-        // },
+        interactions: {
+            url: async function interactionsUrl(ctx, interaction) {
+            return `/login/${interaction.uid}`;
+          }
+        },
         features : {
           registration: {
             enabled: true

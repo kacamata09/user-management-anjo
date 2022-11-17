@@ -4,6 +4,7 @@ const client_controller = require('../controller/daftarClient-controller')
 const oidc_controller = require('../controller/oidc-controller')
 const midwareIngatSaya = require('../config/verifIngat')
 const midwwaraVerifAdmin = require('../config/verifyAdmin')
+const midwareLogin = require('../config/verifyLogin')
 const multer = require('multer')
 const clientRouter = express.Router()
 
@@ -27,7 +28,7 @@ clientRouter.route('/client')
 clientRouter.get('/client/edit/:client_id',midwwaraVerifAdmin.isAdmin, client_controller.tampilEdit)
 clientRouter.post('/client/edit/:client_id',midwwaraVerifAdmin.isAdmin, client_controller.editClient)
 clientRouter.get('/client/hapus/:client_id',midwwaraVerifAdmin.isAdmin, client_controller.hapusClient)
-clientRouter.get('/portalclient', client_controller.tampilPortal)
+clientRouter.get('/', midwareLogin.isLogin, client_controller.tampilPortal)
 
 
 

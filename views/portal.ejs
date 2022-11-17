@@ -24,7 +24,11 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <% if (session.openid) { %>
-            <a class="dropdown-item" href="/">Dashboard</a>
+            <% if (session.username == 'admin') { %>
+              <a class="dropdown-item" href="/admin">Dashboard</a>
+            <% } else { %>
+                <a class="dropdown-item" href="/beranda">Dashboard</a>
+            <% } %>
             <a class="dropdown-item" href="/logout">Logout</a>
           <% } else { %>
           <a class="dropdown-item" href="/oidc/auth?client_id=Xkv3aRBNyjq06XuhYYxpO8g9UGn&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fportalclient">Login</a>

@@ -26,7 +26,8 @@ module.exports = {
         
         } else {
             // resp.send('anda belum login, silahkan <a href="/admin/login" >silahkan login dulu</a>')
-            resp.redirect('/login')
+            // resp.redirect('/login')
+            resp.redirect('/oidc/auth?client_id=Xkv3aRBNyjq06XuhYYxpO8g9UGn&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F')
             return
         }
 } 

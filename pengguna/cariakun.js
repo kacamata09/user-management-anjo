@@ -33,7 +33,7 @@ async function cariData(email) {
 module.exports = {
     async cariUser(email, password) {
         // const getData = requ.body
-        const cariUser = 'select * from pengguna where email = ?'
+        const cariUser = 'select * from pengguna where email = ? or username = ?'
         // if (getData.ingat === '1') {
         //     koneksi.query('insert into session values(?)', email, (err, rows, field) => {
         //         // resp.cookie('email', email)
@@ -43,7 +43,7 @@ module.exports = {
         // console.log(getData.ingat)
         const user = () => {
             return new Promise(function(resolve, reject) {
-                koneksi.query(cariUser, [email], async (err, rows, field) => {
+                koneksi.query(cariUser, [email, email], async (err, rows, field) => {
                     if (err) throw err
                     if (rows.length > 0) {
         

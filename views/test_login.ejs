@@ -23,14 +23,14 @@
       <!-- /.login-logo -->
       <div class="card card-outline card-primary">
         <div class="card-header text-center">
-          <a href="#" class="h1"><b>Login </b>by SSO</a>
+          <a href="#" class="h1"><b>Login </b> SSO</a>
         </div>
         <div class="card-body">
-          <p class="login-box-msg">Masukkan Email dan Password</p>
+          <p class="login-box-msg">Masukkan Username dan Password</p>
     
-          <form action="/interaction/<%= uid %>/login" method="post">
+          <form action="/login/<%= uid %>/login" method="post">
             <div class="input-group mb-3">
-              <input type="email" class="form-control" placeholder="email" id="email" name="login" required>
+              <input type="email" class="form-control" placeholder="email atau username" id="email" name="login" required>
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>
@@ -46,7 +46,14 @@
               </div>
             </div>
             <div class="row">
-              
+              <div class="col-8">
+                <div class="icheck-primary">
+                  <input type="checkbox" id="remember" name="ingat" value="1"> 
+                  <label for="remember">
+                    Remember Me
+                  </label>
+                </div>
+              </div>
               <!-- /.col -->
               <div class="col-12">
                 <button type="submit" class="btn btn-primary btn-block">Sign In</button>
@@ -58,7 +65,7 @@
 
             <div class="row m-2">
               <div class="col-12">
-                <a class="btn btn-danger btn-block" href="/interaction/<%= uid %>/abort">Batal</a>
+                <!-- <a class="btn btn-danger btn-block" href="/interaction/<%= uid %>/abort">Batal</a> -->
                 <% if (client.tosUri) { %>
                   <a href="<%= client.tosUri %>">[ Terms of Service ]</a>
                 <% } %>

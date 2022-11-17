@@ -79,7 +79,7 @@ module.exports = {
   }, 
   tampilPortal(requ, resp) {
     if (requ.query.error) {
-      resp.redirect('/portalclient')
+      resp.redirect('/')
     }
     koneksi.query('select * from clientconfig', (err, rows, field) => {
       if (err) throw err

@@ -5,7 +5,7 @@ const controllerIndex = require('../controller/index-controller')
 const midwareVerifLogin = require('../config/verifyLogin')
 const midwareVerifIngat = require('../config/verifIngat')
 
-indexRouter.route('/')
+indexRouter.route('/beranda')
     .get([midwareVerifIngat.ingatSaya, midwareVerifLogin.isLogin], controllerIndex.tampil)
 
 module.exports = indexRouter
