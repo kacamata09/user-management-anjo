@@ -79,6 +79,7 @@ module.exports = (app, provider) => {
       // const account = await Account.findByLogin(requ.body.login);
       const account = await cariAkun.cariUser(requ.body.login, requ.body.password)
       requ.session.loggedin = true;
+      requ.session.openid = true
       requ.session.userid = account.id;
       requ.session.username = account.nama;
       // console.log(provider.interactionDetails())

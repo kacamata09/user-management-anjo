@@ -11,6 +11,7 @@ const helmet = require('helmet')
 // cari akun
 const cariAkun = require('./pengguna/cariakun')
 
+
 // koneksi database sequelize
 const dbku = require('./config/databasesequelize')
 
@@ -128,9 +129,17 @@ app.post('/cobagambar', upload.single('gambar'), (requ, resp) => {
     resp.send('gambar tersimpan')
 })
 
+// const fungsiKonek = async () => {
+    
+  
+// }
+
+// fungsiKonek()
 
 // oidc 
-koneksi.query('select * from clientconfig', (err, rows, field) => {
+koneksi.query('select * from clientconfig', async (err, rows, field) => {
+        // let adapter = require('./pengguna/adapter')
+        // await adapter.connect();
         const listCl = []
         rows.forEach(cli => {
             listCl.push({
@@ -146,17 +155,18 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
               //other configurations if needed
              }) 
         })
-
-        const oidc = new Provider('http://localhost:3000', {clients: listCl,
+        const oidc = new Provider('http://localhost:3000', {
+        // adapter: adapter, 
+        clients: listCl,
         pkce: {
         required: () => false,
         }, 
         claims :{
-            // openid: [
-            //   'sub'
-            // ],
-            // email: ['email', 'email_verified'],
-            // profile: ['nama', 'email', 'role', 'status'],
+            openid: [
+              'sub'
+            ],
+            email: ['email', 'email_verified'],
+            profile: ['nama', 'email', 'role', 'status'],
           },
           findAccount: cariAkun.findAccount,
           jwks: {
@@ -182,15 +192,22 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
               },
             ],
           },
-        interactions: {
-            url: async function interactionsUrl(ctx, interaction) {
-            return `/interaction/${interaction.uid}`;
-          }
-        },
+        // interactions: {
+        //     url: async function interactionsUrl(ctx, interaction) {
+        //     return `/interaction/${interaction.uid}`;
+        //   }
+        // },
         features : {
-          clientCredentials : {
+          registration: {
             enabled: true
           },
+          registrationManagement: {
+            enabled: true,
+            rotateRegistrationAccessToken: true
+          },
+          // clientCredentials : {
+          //   enabled: true
+          // },
             devInteractions: {
                 enabled : false},
             jwtUserinfo : {
@@ -206,47 +223,7 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
             jwtUserinfo: {
                 enabled: true
             },
-            rpInitiatedLogout: {
-                enabled: true,
-                logoutSource: [async function logoutSource(ctx, form) {
-                    // @param ctx - koa request context
-                    // @param form - form source (id="op.logoutForm") to be embedded in the page and submitted by
-                    //   the End-User
-                    ctx.body = `<!DOCTYPE html>
-                      <head>
-                        <title>Logout Request</title>
-                        <style>/* css and html classes omitted for brevity, see lib/helpers/defaults.js */</style>
-                      </head>
-                      <body>
-                        <div>
-                          <h1>Do you want to sign-out from ${ctx.host}?</h1>
-                          ${form}
-                          <button autofocus type="submit" form="op.logoutForm" value="yes" name="logout">Yes, sign me out</button>
-                          <button type="submit" form="op.logoutForm">No, stay signed in</button>
-                        </div>
-                      </body>
-                      </html>`;
-                  }],
-                  postLogoutSuccessSource: [async function postLogoutSuccessSource(ctx) {
-                    // @param ctx - koa request context
-                    const {
-                      clientId, clientName, clientUri, initiateLoginUri, logoUri, policyUri, tosUri,
-                    } = ctx.oidc.client || {}; // client is defined if the user chose to stay logged in with the OP
-                    const display = clientName || clientId;
-                    ctx.body = `<!DOCTYPE html>
-                      <head>
-                        <title>Sign-out Success</title>
-                        <style>/* css and html classes omitted for brevity, see lib/helpers/defaults.js */</style>
-                      </head>
-                      <body>
-                        <div>
-                          <h1>Sign-out Success</h1>
-                          <p>Your sign-out ${display ? `with ${display}` : ''} was successful.</p>
-                        </div>
-                      </body>
-                      </html>`;
-                  }]
-            }
+           
             
         }, 
         
@@ -284,44 +261,47 @@ koneksi.query('select * from clientconfig', (err, rows, field) => {
         })
         
         app.use('/oidc', oidc.callback())
+        
+        // halaman error 404
+        app.use(function(requ, resp, next) {
+          resp.status(404)
+            // respond with html page
+          if (requ.accepts('html')) {
+            resp.render('halaman_error/404', { url: requ.url });
+            // resp.send(`<h1>Maaf halaman ya`)
+            return;
+          }
+
+          // respond with json
+          if (requ.accepts('json')) {
+            resp.json({ error: 'Not found' });
+            return;
+          }
+
+          // default to plain-text. send()
+          resp.type('txt').send('Not found');
+          
+
+          
+        });
+
+        
+        const PORT = 3000
+        const display = `SERVER INI BERJALAN DI PORT : ${PORT}`
+        app.listen(PORT, console.log(display))
 
     })
 
 
 
-// koneksi db
-const tersambung = async () => {
-    await dbku.authenticate()
-    console.log('mysql versi sequelize berjalan....')
-}
+// // koneksi db
+// const tersambung = async () => {
+//     await dbku.authenticate()
+//     console.log('mysql versi sequelize berjalan....')
+// }
 
-tersambung()
+// tersambung()
 
 
 
-// halaman error 404
-// app.use(function(requ, resp, next) {
-//   resp.status(404)
-//     // respond with html page
-//   if (requ.accepts('html')) {
-//     resp.render('halaman_error/404', { url: requ.url });
-//     // resp.send(`<h1>Maaf halaman ya`)
-//     return;
-//   }
 
-//   // respond with json
-//   if (requ.accepts('json')) {
-//     resp.json({ error: 'Not found' });
-//     return;
-//   }
-
-//   // default to plain-text. send()
-//   resp.type('txt').send('Not found');
-  
-
-  
-// });
-
-const PORT = 3000
-const display = `SERVER INI BERJALAN DI PORT : ${PORT}`
-app.listen(PORT, console.log(display))

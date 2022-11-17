@@ -20,11 +20,15 @@
       
       <ul class="nav-item dropdown my-2 my-lg-0">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Login
+          Menu
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Dashbord</a>
-          <a class="dropdown-item" href="#">logout</a>
+          <% if (session.openid) { %>
+            <a class="dropdown-item" href="/">Dashboard</a>
+            <a class="dropdown-item" href="/logout">Logout</a>
+          <% } else { %>
+          <a class="dropdown-item" href="/oidc/auth?client_id=Xkv3aRBNyjq06XuhYYxpO8g9UGn&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fportalclient">Login</a>
+          <% } %>
         </div>
       </ul>
       </nav>
@@ -37,15 +41,13 @@
 
 
 
-  <div class="row">
-    <% clients.forEach(c => { %>
-
-  <div class="col-md-6 col-lg-4 col-12">
+<% clients.forEach(c => { %>
+<div class="card col-12" style="width: 27rem;">
   <img class="card-img-top" src="../static/logo_client/<%= c.logo_app %>" alt="Card image cap">
-  <div class="card mb-4">
+  <div class="card-body">
     <h5 class="card-title"><%= c.nama_client %></h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="<%= c.redirect_uri %>" class="btn btn-primary">Go somewhere</a>
+    <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+    <a href="<%= c.redirect_uri %>" class="btn btn-primary">Login</a>
   </div>
   </div>
 
