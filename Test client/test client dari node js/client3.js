@@ -44,9 +44,12 @@ passport.deserializeUser(function(user, done) {
 Issuer.discover('http://localhost:3000/oidc') 
   .then(function (oidcIssuer) {
     var client = new oidcIssuer.Client({
-      client_id: 'KyV3S7dLxbVgg10B0cVN7Fi8JDD',
-      client_secret: 'NlLMpdXu8OkAS9uOVbCSg9ipFIx',
-      redirect_uris: ["http://localhost:8080/auth/login/callback"],
+      // client_id: 'KyV3S7dLxbVgg10B0cVN7Fi8JDD',
+      // client_secret: 'NlLMpdXu8OkAS9uOVbCSg9ipFIx',
+      // redirect_uris: ["http://localhost:8080/auth/login/callback"],
+      client_id: 'oidcCLIENT',
+      client_secret: 'Some_super_secret',
+      redirect_uris: ["http://localhost:1000/auth/login/callback"],
       response_types: ['code'], 
       
     });
@@ -99,6 +102,6 @@ app.get ("/user",(req,res) =>{
 
   const httpServer = http.createServer(app)
   //const server= https.createServer(options,app).listen(3003);
-  httpServer.listen(8080,() =>{
-      console.log(`Http Server Running on port 8080`)
+  httpServer.listen(1000,() =>{
+      console.log(`Http Server Running on port 1000`)
     })

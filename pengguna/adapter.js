@@ -44,7 +44,7 @@ const models = [
     ...(grantable.has(name) ? { grantId: { type: Sequelize.STRING } } : undefined),
     ...(name === 'DeviceCode' ? { userCode: { type: Sequelize.STRING } } : undefined),
     ...(name === 'Session' ? { uid: { type: Sequelize.STRING } } : undefined),
-    data: { type: Sequelize.JSON },
+    data: { type: Sequelize.TEXT('long') },
     expiresAt: { type: Sequelize.DATE, },
     consumedAt: { type: Sequelize.DATE,   },
   },));
